@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 feature 'User can sign in', %q(
-  In order to ask questions
-  As an unauthenticated user
-  I'd like to able to sign in
+        In order to ask questions
+        As an unauthenticated user
+        I'd like to able to sign in
 ) do
   given(:user) { create(:user) }
+
   background { visit new_user_session_path }
 
   scenario 'Registered user tries to sign in' do
@@ -19,7 +20,7 @@ feature 'User can sign in', %q(
   scenario 'Unregistred user tries to sign in' do
     visit new_user_session_path
     fill_in 'Email', with: user.email
-    fill_in 'Password', with: attributes_for(:user, :wrong)[:password]
+    fill_in 'Password', with: 'wrong' + user.password
     click_on 'Log in'
 
     expect(page).to have_content I18n.t('devise.failure.invalid', authentication_keys: 'Email')
