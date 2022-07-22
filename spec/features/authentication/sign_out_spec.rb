@@ -7,12 +7,7 @@ feature 'User can sign out', %q(
 ) do
   given(:user) { create(:user) }
 
-  background do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
-  end
+  background { login(user) }
 
   scenario 'authenticated user tries to sign out' do
     click_on I18n.t('sign_out')

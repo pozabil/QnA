@@ -1,3 +1,18 @@
 en:
   sign_out: "Sign out"
   sign_out_confirm: "Do you really want to logout?"
+
+  helpers:
+    submit:
+      question:
+        create: "Ask"
+
+  questions:
+    create:
+      success: "Your question successfuly created"
+
+  shared:
+    errors:
+      header:
+        one: "Fail. %{count} error detected."
+        other: "Fail. %{count} errors detected."

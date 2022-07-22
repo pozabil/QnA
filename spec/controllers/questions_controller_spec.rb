@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
+    let(:user) { create(:user) }
     let(:post_create_valid) { post :create, params: { question: attributes_for(:question) } }
     let(:post_create_invalid) { post :create, params: { question: attributes_for(:question, :invalid) } }
+
+    before { login(user) }
 
     context 'with valid attributes' do
       it 'saves a new question in the database' do

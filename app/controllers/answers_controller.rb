@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
+
   expose :answers, from: :question
   expose :answer, ->{ params[:id] ? answers.find(params[:id]) : answers.new(answer_params) }
 

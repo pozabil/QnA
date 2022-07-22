@@ -18,9 +18,8 @@ feature 'User can sign in', %q(
   end
 
   scenario 'Unregistred user tries to sign in' do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: 'wrong' + user.password
+    fill_in 'Email', with: 'wrong' + user.email
+    fill_in 'Password', with: user.password
     click_on 'Log in'
 
     expect(page).to have_content I18n.t('devise.failure.invalid', authentication_keys: 'Email')
