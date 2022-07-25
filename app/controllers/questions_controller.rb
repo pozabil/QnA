@@ -14,7 +14,13 @@ class QuestionsController < ApplicationController
 
   private
 
+  helper_method :answer
+
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def answer
+    question.answers.new
   end
 end

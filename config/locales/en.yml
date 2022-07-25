@@ -6,10 +6,20 @@ en:
     submit:
       question:
         create: "Ask"
+      answer:
+        create: "Post Your Answer"
+
+    label:
+      answer:
+        body: "Your Answer"
 
   questions:
     create:
       success: "Your question successfuly created"
+
+  answers:
+    create:
+      success: "Your answer successfuly posted"
 
   shared:
     errors:

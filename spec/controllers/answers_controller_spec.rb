@@ -33,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders new view' do
         post_create_invalid
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end

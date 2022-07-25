@@ -1,6 +1,6 @@
 FactoryBot.define do
   sequence :title do |n|
-    "question#{n}"
+    "question's title #{n}"
   end
 
   factory :question do
