@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User can create question', %q(
+feature 'User can view question list', %q(
         In order to find question that interests me
         As any user
         I'd like to be able to view list of all questions
