@@ -3,12 +3,12 @@ require 'rails_helper'
 feature 'User can create answer', %q(
         In order to answer the question
         As an authenticated user
-        I would like to be able to give answers
+        I'd like to be able to give the answer
 ) do
-  given(:question) { create(:question) }
+  given(:user) { create(:user) }
+  given(:question) { create(:question, user_id: user.id) }
 
   describe 'Authenticated user' do
-    given(:user) { create(:user) }
     given(:answer_data) { attributes_for(:answer) }
 
     background do

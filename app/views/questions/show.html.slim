@@ -1,5 +1,6 @@
 h1 = question.title
 p = question.body
+p = delete_question(question) if question.user == current_user
 
 table
   = render question.answers

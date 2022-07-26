@@ -16,6 +16,11 @@ en:
   questions:
     create:
       success: "Your question successfuly created"
+    destroy:
+      success: "Your question has been deleted"
+      failure: "You can't delete someone else's question"
+    show:
+      delete: "Delete question"
 
   answers:
     create:

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User can sign out', %q(
-        In order to end session
+        In order to end the session
         As an authenticated user
         I'd like to able to sign out
 ) do

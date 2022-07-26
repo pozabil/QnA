@@ -3,10 +3,11 @@ require 'rails_helper'
 feature 'User can view question and answers to it', %q(
         In order to view question that interests me and answers to it
         As any user
-        I would like to be able to go to question page
+        I'd like to be able to go to the question page
 ) do
-  given!(:question) { create(:question) }
-  given!(:answers) {create_list(:answer, 5, question_id: question.id)}
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, user_id: user.id) }
+  given!(:answers) { create_list(:answer, 5, question_id: question.id) }
 
   scenario 'user tries to view question and answers to it' do
     visit questions_path

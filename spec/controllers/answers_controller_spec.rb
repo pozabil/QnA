@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user_id: user.id) }
 
   describe 'POST #create' do
-    let(:user) { create(:user) }
     let(:post_create_valid) { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
     let(:post_create_invalid) { post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid) } }
 
@@ -31,7 +31,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { post_create_invalid }.to_not change(Answer, :count)
       end
 
-      it 're-renders new view' do
+      it 're-renders show view' do
         post_create_invalid
         expect(response).to render_template 'questions/show'
       end

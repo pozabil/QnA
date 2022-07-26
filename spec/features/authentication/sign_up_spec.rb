@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User can sign up', %q(
-        In order to use full functionality of service
+        In order to use full functionality of the service
         As an unregistered user
         I'd like to able to sign up
 ) do
