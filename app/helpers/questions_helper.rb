@@ -3,6 +3,6 @@ module QuestionsHelper
     link_to t('.delete'),
             question_path(question),
             method: :delete,
-            data: { confirm: t('helpers.questions_helper.delete_confirmation') }
+            data: { confirm: t('.delete_confirmation') }
   end
 end

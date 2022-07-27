@@ -21,10 +21,17 @@ en:
       failure: "You can't delete someone else's question"
     show:
       delete: "Delete question"
+      delete_confirmation: "Are you sure you want to delete this question?"
 
   answers:
     create:
       success: "Your answer successfuly posted"
+    destroy:
+      success: "Your answer has been deleted"
+      failure: "You can't delete someone else's answer"
+    answer:
+      delete: "Delete answer"
+      delete_confirmation: "Are you sure you want to delete this answer?"
 
   shared:
     errors:

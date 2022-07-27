@@ -7,7 +7,7 @@ feature 'User can view question and answers to it', %q(
 ) do
   given(:user) { create(:user) }
   given!(:question) { create(:question, user_id: user.id) }
-  given!(:answers) { create_list(:answer, 5, question_id: question.id) }
+  given!(:answers) { create_list(:answer, 5, question_id: question.id, user_id: user.id) }
 
   scenario 'user tries to view question and answers to it' do
     visit questions_path

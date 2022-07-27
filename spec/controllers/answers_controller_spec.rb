@@ -37,4 +37,37 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
+    let(:delete_answer){ delete :destroy, params: { id: answer } }
+
+    context 'answer creator' do
+      before { login(user) }
+
+      it 'deletes answer from database' do
+        expect { delete_answer }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirects to question show view' do
+        delete_answer
+        expect(response).to redirect_to question
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it 'leaves answer in database' do
+        expect { delete_answer }.to_not change(Answer, :count)
+      end
+
+      it 're-renders question show view' do
+        delete_answer
+        expect(response).to render_template 'questions/show'
+      end
+    end
+  end
 end

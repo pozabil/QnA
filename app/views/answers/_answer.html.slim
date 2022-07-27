@@ -1,2 +1,4 @@
-tr
-  td = answer.body
+- if answer.persisted?
+  tr
+    td = answer.body
+    td = delete_answer(answer) if answer.user == current_user
