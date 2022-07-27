@@ -31,7 +31,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { post_create_invalid }.to_not change(Answer, :count)
       end
 
-      it 're-renders show view' do
+      it 're-renders parent question show view' do
         post_create_invalid
         expect(response).to render_template 'questions/show'
       end
@@ -49,7 +49,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete_answer }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to question show view' do
+      it 'redirects to parent question show view' do
         delete_answer
         expect(response).to redirect_to question
       end
@@ -64,7 +64,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete_answer }.to_not change(Answer, :count)
       end
 
-      it 're-renders question show view' do
+      it 're-renders parent question show view' do
         delete_answer
         expect(response).to render_template 'questions/show'
       end
