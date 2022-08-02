@@ -3,6 +3,51 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
 
+  describe 'GET #index' do
+    let!(:questions) { create_list(:question, 5, user_id: user.id)}
+
+    before { get :index }
+
+    it 'populates an array of all questions' do
+      expect(assigns(:questions)).to match_array questions
+    end
+
+    it 'renders index view' do
+      expect(response).to render_template :index
+    end
+  end
+
+  describe 'GET #show' do
+    let!(:question) { create(:question, user_id: user.id) }
+
+    before { get :show, params: { id: question } }
+
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'assigns a new Answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'renders show view' do
+      expect(response).to render_template :show
+    end
+  end
+
+  describe 'GET #new' do
+    before { login(user) }
+    before { get :new }
+
+    it 'assigns a new Question to @question' do
+      expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it 'renders new view' do
+      expect(response).to render_template :new
+    end
+  end
+
   describe 'POST #create' do
     let(:post_create_valid) { post :create, params: { question: attributes_for(:question) } }
     let(:post_create_invalid) { post :create, params: { question: attributes_for(:question, :invalid) } }
@@ -16,7 +61,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to show view' do
         post_create_valid
-        expect(response).to redirect_to assigns(:exposed_question)
+        expect(response).to redirect_to assigns(:question)
       end
     end
 

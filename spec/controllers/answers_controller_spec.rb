@@ -17,12 +17,12 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'check new answer belongs to the correct question' do
         post_create_valid
-        expect(assigns(:exposed_answer).question).to eq question
+        expect(assigns(:answer).question).to eq question
       end
 
       it 'redirects to parent question show view' do
         post_create_valid
-        expect(response).to redirect_to assigns(:exposed_answer).question
+        expect(response).to redirect_to assigns(:answer).question
       end
     end
 
