@@ -1,22 +1,32 @@
 class AnswersController < ApplicationController
-  expose :answers, from: :question
-  expose :answer, ->{ params[:id] ? answers.find(params[:id]) : answers.new(answer_params) }
+  before_action :authenticate_user!, except: %i[index show]
 
   def create
-    if answer.save
-      redirect_to answer.question
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.new(answer_params)
+
+    if @answer.save
+      redirect_to @answer.question, notice: t('.success')
     else
-      render :new
+      render 'questions/show'
+    end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+
+    if @answer.user == current_user
+      @answer.destroy
+      redirect_to @answer.question, notice: t('.success')
+    else
+      flash.now[:notice] = t('.failure')
+      render 'questions/show'
     end
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:body)
-  end
-
-  def question
-    Question.find(params[:question_id])
+    params.require(:answer).permit(:body).merge(user_id: current_user.id)
   end
 end
