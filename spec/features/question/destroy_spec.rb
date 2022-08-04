@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User can delete their question', %q(
         In order to remove question
-        As an authenticated user
+        As an aothor of question
         I'd like to be able to delete my question
 ) do
   given(:user) { create(:user) }

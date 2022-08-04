@@ -1,0 +1,10 @@
+$('.answer-errors').html('')
+$('.notice').html('')
+
+<% if @answer.persisted? %>
+	$('.answers table').append('<%= j render @answer %>')
+	$('#answer_body').val('')
+	$('.notice').html('<%= notice %>')
+<% else %>
+	$('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>')
+<% end %>

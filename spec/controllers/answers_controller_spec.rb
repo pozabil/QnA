@@ -5,8 +5,8 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question, user_id: user.id) }
 
   describe 'POST #create' do
-    let(:post_create_valid) { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
-    let(:post_create_invalid) { post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid) } }
+    let(:post_create_valid) { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }
+    let(:post_create_invalid) { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js }
 
     before { login(user) }
 
@@ -20,9 +20,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(assigns(:answer).question).to eq question
       end
 
-      it 'redirects to parent question show view' do
+      it 'renders javascript code from create view' do
         post_create_valid
-        expect(response).to redirect_to assigns(:answer).question
+        expect(response).to render_template :create
       end
     end
 
@@ -31,9 +31,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { post_create_invalid }.to_not change(Answer, :count)
       end
 
-      it 're-renders parent question show view' do
+      it 'renders javascript code from create view' do
         post_create_invalid
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
       end
     end
   end

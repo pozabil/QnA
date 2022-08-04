@@ -2,9 +2,10 @@ h1 = @question.title
 p = @question.body
 p = delete_question(@question) if @question.user == current_user
 
+.answers
+  table
+    = render @question.answers
 
-table
-  = render @question.answers
 = render 'answers/new'
 
 p = link_to t('back'), questions_path

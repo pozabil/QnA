@@ -8,7 +8,7 @@ feature 'User can create answer', %q(
   given(:user) { create(:user) }
   given(:question) { create(:question, user_id: user.id) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     given(:answer_data) { attributes_for(:answer) }
 
     background do
@@ -20,8 +20,9 @@ feature 'User can create answer', %q(
       fill_in 'Your Answer', with: answer_data[:body]
       click_on 'Post Your Answer'
 
+      expect(current_path).to eq question_path(question)
       expect(page).to have_content 'Your answer successfuly posted'
-      expect(page).to have_content answer_data[:body]
+      within('.answers') { expect(page).to have_content answer_data[:body] }
     end
 
     scenario 'tries to give answer with errors' do

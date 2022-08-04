@@ -2,8 +2,8 @@ require 'rails_helper'
 
 feature 'User can delete their answer to question', %q(
         In order to remove answers to question
-        As an authenticated user
-        I'd like to be able to delete their answer
+        As an author of answer
+        I'd like to be able to delete my answer
 ) do
   given(:user) { create(:user) }
   given(:question) { create(:question, user_id: user.id) }
