@@ -38,6 +38,62 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
+
+    let(:edit_answer_valid) do
+      patch :update, params: { id: answer, answer: attributes_for(:answer, :custom) }, format: :js
+      answer.reload
+    end
+
+    let(:edit_answer_invalid) do
+      patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+      answer.reload
+    end
+
+    context 'answer creator' do
+      before { login(user) }
+
+      context 'with valid attributes' do
+        it 'changes answer attributes' do
+          edit_answer_valid
+          expect(answer.body).to eq attributes_for(:answer, :custom)[:body]
+        end
+
+        it 'renders javascript code from update view' do
+          edit_answer_valid
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change answer attributes' do
+          expect { edit_answer_invalid }.to_not change(answer, :body)
+        end
+
+        it 'renders javascript code from update view' do
+          edit_answer_invalid
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it 'does not change answer attributes' do
+        expect { edit_answer_valid }.to_not change(answer, :body)
+      end
+
+      it 'renders javascript code from update view' do
+        edit_answer_valid
+        expect(response).to render_template :update
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
     let(:delete_answer){ delete :destroy, params: { id: answer } }

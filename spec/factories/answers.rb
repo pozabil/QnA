@@ -9,5 +9,9 @@ FactoryBot.define do
     trait :invalid do
       body { nil }
     end
+
+    trait :custom do
+      body { "custom answer custom body" }
+    end
   end
 end

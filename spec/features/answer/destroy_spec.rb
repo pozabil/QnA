@@ -10,8 +10,9 @@ feature 'User can delete their answer to question', %q(
   given!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
 
   describe 'Authenticated user' do
+    given!(:extra_answers) { create_list(:answer, 3, question_id: question.id, user_id: user.id) }
     given(:another_user) { create(:user) }
-    given!(:another_answer) { create(:answer, question_id: question.id, user_id: another_user.id) }
+    given(:another_answer) { create(:answer, question_id: question.id, user_id: another_user.id) }
 
     background { login(user) }
 
@@ -20,10 +21,11 @@ feature 'User can delete their answer to question', %q(
       click_link 'Delete answer', href: "/answers/#{answer.id}"
 
       expect(page).to have_content 'Your answer has been deleted'
-      expect(page).not_to have_content answer.body
+      expect(page).to_not have_content answer.body
     end
 
     scenario "tries to delete someone else's answer" do
+      another_answer
       visit question_path(question)
 
       expect(page).to_not have_link 'Delete answer', href: "/answers/#{another_answer.id}"

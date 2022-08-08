@@ -7,6 +7,14 @@ class AnswersController < ApplicationController
     flash.now[:notice] = t('.success') if @answer.save
   end
 
+  def update
+    @answer = Answer.find(params[:id])
+
+    if @answer.user == current_user
+      flash.now[:notice] = t('.success') if @answer.update(answer_params)
+    end
+  end
+
   def destroy
     @answer = Answer.find(params[:id])
 

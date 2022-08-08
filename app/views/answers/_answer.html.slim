@@ -1,4 +1,12 @@
 - if answer.persisted?
-  tr
-    td = answer.body
-    td = delete_answer(answer) if answer.user == current_user
+
+  tr id="answer-#{answer.id}"
+    td class='answer-body' = answer.body
+    - if answer.user == current_user
+      td
+        = form_with model: answer, html: { style: "display: none;" }, local: false do |f|
+          .answer-errors
+          = f.text_area :body
+          = f.submit t('save')
+      td = edit_answer(answer)
+      td = delete_answer(answer)

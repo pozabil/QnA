@@ -1,5 +1,7 @@
 en:
   back: "Back"
+  edit: "Edit"
+  save: "Save"
   sign_out: "Sign out"
   sign_out_confirm: "Do you really want to logout?"
 
@@ -27,6 +29,8 @@ en:
   answers:
     create:
       success: "Your answer successfuly posted"
+    update:
+      success: "Your answer has been successfully edited"
     destroy:
       success: "Your answer has been deleted"
       failure: "You can't delete someone else's answer"
