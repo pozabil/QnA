@@ -96,7 +96,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
-    let(:delete_answer){ delete :destroy, params: { id: answer } }
+    let(:delete_answer){ delete :destroy, params: { id: answer }, format: :js }
 
     context 'answer creator' do
       before { login(user) }
@@ -105,9 +105,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete_answer }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to parent question show view' do
+      it 'renders javascript code from destroy view' do
         delete_answer
-        expect(response).to redirect_to question
+        expect(response).to render_template :destroy
       end
     end
 
@@ -120,9 +120,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete_answer }.to_not change(Answer, :count)
       end
 
-      it 're-renders parent question show view' do
+      it 'renders javascript code from destroy view' do
         delete_answer
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :destroy
       end
     end
   end

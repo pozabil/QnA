@@ -3,7 +3,8 @@ module AnswersHelper
     link_to t('delete'),
             answer_path(answer),
             method: :delete,
-            data: { confirm: t('.delete_confirmation') }
+            data: { confirm: t('.delete_confirmation') },
+            remote: true
   end
 
   def edit_answer(answer)
