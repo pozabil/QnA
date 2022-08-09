@@ -77,6 +77,65 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #create' do
+    let!(:question) { create(:question, user_id: user.id) }
+
+    let(:edit_question_valid) do
+      patch :update, params: { id: question, question: attributes_for(:question, :custom) }, format: :js
+      question.reload
+    end
+
+    let(:edit_question_invalid) do
+      patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+      question.reload
+    end
+
+    context 'question creator' do
+      RSpec::Matchers.define_negated_matcher :not_change, :change
+
+      before { login(user) }
+
+      context 'with valid attributes' do
+        it 'changes question attributes' do
+          edit_question_valid
+          expect(question.title).to eq attributes_for(:question, :custom)[:title]
+          expect(question.body).to eq attributes_for(:question, :custom)[:body]
+        end
+
+        it 'renders javascript code from update view' do
+          edit_question_valid
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change question attributes' do
+          expect { edit_question_invalid }.to not_change(question, :title).and not_change(question, :body)
+        end
+
+        it 'renders javascript code from update view' do
+          edit_question_invalid
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it 'does not change question attributes' do
+        expect { edit_question_valid }.to not_change(question, :title).and not_change(question, :body)
+      end
+
+      it 'renders javascript code from update view' do
+        edit_question_valid
+        expect(response).to render_template :update
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     let!(:question) { create(:question, user_id: user.id) }
     let(:delete_question){ delete :destroy, params: { id: question } }

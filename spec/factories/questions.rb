@@ -1,14 +1,15 @@
 FactoryBot.define do
-  sequence :title do |n|
-    "question's title #{n}"
-  end
-
   factory :question do
-    title
-    body { "body" }
+    sequence(:title) { |n| "question's title #{n}" }
+    sequence(:body) { |n| "question's body #{n}" }
 
     trait :invalid do
       title { nil }
+    end
+
+    trait :custom do
+      title { "custom question custom title" }
+      body { "custom question custom body" }
     end
   end
 end

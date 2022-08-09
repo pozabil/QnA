@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show destroy]
+  before_action :find_question, only: %i[show update destroy]
 
   def index
     @questions = Question.all
@@ -21,6 +21,12 @@ class QuestionsController < ApplicationController
       redirect_to @question, notice: t('.success')
     else
       render :new
+    end
+  end
+
+  def update
+    if @question.user == current_user
+      flash.now[:notice] = t('.success') if @question.update(question_params)
     end
   end
 

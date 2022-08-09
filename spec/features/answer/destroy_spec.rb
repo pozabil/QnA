@@ -18,7 +18,7 @@ feature 'User can delete their answer to question', %q(
 
     scenario 'tries to delete their answer' do
       visit question_path(question)
-      click_link 'Delete answer', href: "/answers/#{answer.id}"
+      click_link 'Delete', href: "/answers/#{answer.id}"
 
       expect(page).to have_content 'Your answer has been deleted'
       expect(page).to_not have_content answer.body
@@ -28,13 +28,13 @@ feature 'User can delete their answer to question', %q(
       another_answer
       visit question_path(question)
 
-      expect(page).to_not have_link 'Delete answer', href: "/answers/#{another_answer.id}"
+      expect(page).to_not have_link 'Delete', href: "/answers/#{another_answer.id}"
     end
   end
 
   scenario 'Unauthenticated user tries to delete answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete answer', href: "/answers/#{answer.id}"
+    expect(page).to_not have_link 'Delete', href: "/answers/#{answer.id}"
   end
 end
