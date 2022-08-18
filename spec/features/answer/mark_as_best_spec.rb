@@ -13,17 +13,38 @@ feature 'Author can choose best answer for their question', %q(
   describe 'Authenticated user', js: true do
     background { login(user) }
 
-    scenario 'tries to mark answer as best for their question' do
-      visit question_path(question)
-      within(".answers #answer-#{answer.id}") { click_on 'Mark as best' }
+    describe 'tries to mark answer as best for their question' do
+      scenario 'question has no best answer' do
+        visit question_path(question)
+        within(".answers #answer-#{answer.id}") { click_on 'Mark as best' }
 
-      within('.answers') do
-        expect(page).to have_css "#answer-#{answer.id}.best-answer"
-        expect(page.find("#answer-#{answer.id}.best-answer")).to have_content(answer.body)
-        expect(page.find('tr', match: :first)).to have_content(answer.body)
+        within('.answers') do
+          expect(page).to have_css "#answer-#{answer.id}.best-answer"
+          expect(page.find("#answer-#{answer.id}.best-answer")).to have_content(answer.body)
+          expect(page.find('tr', match: :first)).to have_content(answer.body)
+        end
+
+        expect(page).to have_content 'Selected answer has been marked as best'
       end
 
-      expect(page).to have_content 'Selected answer has been marked as best'
+      scenario 'question has best answer' do
+        other_answer = create(:answer, question: question, user: user)
+
+        visit question_path(question)
+        within(".answers #answer-#{answer.id}") { click_on 'Mark as best' }
+        within(".answers #answer-#{other_answer.id}") { click_on 'Mark as best' }
+
+        within('.answers') do
+          expect(page).to have_css "#answer-#{other_answer.id}.best-answer"
+          expect(page).to_not have_css "#answer-#{answer.id}.best-answer"
+          expect(page).to have_css "#answer-#{answer.id}"
+          expect(page.find("#answer-#{other_answer.id}.best-answer")).to have_content(other_answer.body)
+          expect(page.find("#answer-#{answer.id}")).to have_content(answer.body)
+          expect(page.find('tr', match: :first)).to have_content(other_answer.body)
+        end
+
+        expect(page).to have_content 'Selected answer has been marked as best'
+      end
     end
 
     scenario "tries to mark answer as best for someone else's question" do
