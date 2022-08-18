@@ -14,7 +14,8 @@
 
 .answers
   table
-    = render @question.answers
+    = render 'answers/best_answer', answer: @best_answer
+    = render @other_answers
 
 = render 'answers/new'
 

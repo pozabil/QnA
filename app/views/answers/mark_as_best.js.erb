@@ -1,0 +1,3 @@
+$('.notice').html('<%= notice %>')
+$('.answers #answer-<%= @answer.id %>').remove()
+$('.answers table').prepend('<%= j render 'answers/best_answer', answer: @answer %>')

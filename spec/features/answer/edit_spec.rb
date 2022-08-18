@@ -6,11 +6,11 @@ feature 'User can edit answer', %q(
   I'd like to be able to edit my answer
 ) do
   given(:user) { create(:user) }
-  given(:question) { create(:question, user_id: user.id) }
-  given!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
+  given(:question) { create(:question, user: user) }
+  given!(:answer) { create(:answer, question: question, user: user) }
 
   describe 'Authenticated user', js: true do
-    given!(:extra_answers) { create_list(:answer, 3, question_id: question.id, user_id: user.id) }
+    given!(:extra_answers) { create_list(:answer, 3, question: question, user: user) }
 
     background { login(user) }
 
@@ -47,7 +47,7 @@ feature 'User can edit answer', %q(
 
     scenario "tries to edit someone else's answer" do
       another_user = create(:user)
-      another_answer = create(:answer, question_id: question.id, user_id: another_user.id)
+      another_answer = create(:answer, question: question, user: another_user)
       visit question_path(question)
 
       within(".answers #answer-#{another_answer.id}") { expect(page).to_not have_link 'Edit' }

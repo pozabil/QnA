@@ -13,4 +13,11 @@ module AnswersHelper
             class: 'edit-answer-link',
             data: { answer_id: answer.id }
   end
+
+  def mark_as_best(answer)
+    button_to t('.mark_as_best'),
+              mark_as_best_answer_path(answer),
+              method: :patch,
+              remote: true
+  end
 end

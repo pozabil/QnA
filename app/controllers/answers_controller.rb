@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_answer, only: %i[update destroy]
+  before_action :find_answer, only: %i[update destroy mark_as_best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -17,6 +17,13 @@ class AnswersController < ApplicationController
   def destroy
     if @answer.user == current_user
       flash.now[:notice] = t('.success') if @answer.destroy
+    end
+  end
+
+  def mark_as_best
+    if @answer.question.user = current_user
+      @answer.mark_as_best
+      flash.now[:notice] = t('.success')
     end
   end
 

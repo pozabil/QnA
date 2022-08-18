@@ -6,7 +6,7 @@ feature 'User can create answer', %q(
         I'd like to be able to give the answer
 ) do
   given(:user) { create(:user) }
-  given(:question) { create(:question, user_id: user.id) }
+  given(:question) { create(:question, user: user) }
 
   describe 'Authenticated user', js: true do
     given(:answer_data) { attributes_for(:answer) }

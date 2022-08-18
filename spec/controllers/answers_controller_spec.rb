@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question, user_id: user.id) }
+  let(:question) { create(:question, user: user) }
 
   describe 'POST #create' do
     let(:post_create_valid) { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }
@@ -39,7 +39,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
+    let!(:answer) { create(:answer, question: question, user: user) }
 
     let(:edit_answer_valid) do
       patch :update, params: { id: answer, answer: attributes_for(:answer, :custom) }, format: :js
@@ -95,7 +95,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
+    let!(:answer) { create(:answer, question: question, user: user) }
     let(:delete_answer){ delete :destroy, params: { id: answer }, format: :js }
 
     context 'answer creator' do
@@ -123,6 +123,40 @@ RSpec.describe AnswersController, type: :controller do
       it 'renders javascript code from destroy view' do
         delete_answer
         expect(response).to render_template :destroy
+      end
+    end
+  end
+
+  describe 'PATCH #mark_as_best' do
+    let!(:answer) { create(:answer, question: question, user: user) }
+    let(:mark_answer_as_best){ patch :mark_as_best, params: { id: answer }, format: :js }
+
+    context 'questions creator' do
+      before { login(user) }
+
+      it "changes question's best answer to selected answer in database" do
+        mark_answer_as_best
+        expect(answer.question.reload.best_answer_id).to eq answer.id
+      end
+
+      it "renders javascript code from mark_as_best view" do
+        mark_answer_as_best
+        expect(response).to render_template :mark_as_best
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it "does not change question's best answer in database" do
+        expect { mark_answer_as_best }.to_not change(answer.question, :best_answer_id)
+      end
+
+      it "renders javascript code from mark_as_best view" do
+        mark_answer_as_best
+        expect(response).to render_template :mark_as_best
       end
     end
   end

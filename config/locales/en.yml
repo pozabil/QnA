@@ -38,9 +38,12 @@ en:
     destroy:
       success: "Your answer has been deleted"
       failure: "You can't delete someone else's answer"
+    mark_as_best:
+      success: "Selected answer has been marked as best"
     answer:
       delete: "Delete answer"
       delete_confirmation: "Are you sure you want to delete this answer?"
+      mark_as_best: "Mark as best"
 
   shared:
     errors:

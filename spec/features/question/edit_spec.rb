@@ -6,7 +6,7 @@ feature 'User can edit question', %q(
   I'd like to be able to edit my question
 ) do
   given(:user) { create(:user) }
-  given!(:question) { create(:question, user_id: user.id) }
+  given!(:question) { create(:question, user: user) }
 
   describe 'Authenticated user', js: true do
     given(:another_user) { create(:user) }
@@ -49,7 +49,7 @@ feature 'User can edit question', %q(
 
     scenario "tries to edit someone else's question" do
       another_user = create(:user)
-      another_question = create(:question, user_id: another_user.id)
+      another_question = create(:question, user: another_user)
       visit question_path(another_question)
 
       within('.question') { expect(page).to_not have_link 'Edit question' }
