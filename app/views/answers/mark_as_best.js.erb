@@ -1,0 +1,5 @@
+$('.notice').html('<%= notice %>')
+
+$('.answers table').html('')
+$('.answers table').append('<%= j render 'answers/best_answer', answer: @answer %>')
+$('.answers table').append('<%= j render @answer.question.answers.where.not(id: @answer) %>')

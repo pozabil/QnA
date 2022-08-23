@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question, user_id: user.id) }
+  let(:question) { create(:question, user: user) }
 
   describe 'POST #create' do
-    let(:post_create_valid) { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
-    let(:post_create_invalid) { post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid) } }
+    let(:post_create_valid) { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }
+    let(:post_create_invalid) { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js }
 
     before { login(user) }
 
@@ -20,9 +20,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(assigns(:answer).question).to eq question
       end
 
-      it 'redirects to parent question show view' do
+      it 'renders javascript code from create view' do
         post_create_valid
-        expect(response).to redirect_to assigns(:answer).question
+        expect(response).to render_template :create
       end
     end
 
@@ -31,16 +31,72 @@ RSpec.describe AnswersController, type: :controller do
         expect { post_create_invalid }.to_not change(Answer, :count)
       end
 
-      it 're-renders parent question show view' do
+      it 'renders javascript code from create view' do
         post_create_invalid
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: question, user: user) }
+
+    let(:edit_answer_valid) do
+      patch :update, params: { id: answer, answer: attributes_for(:answer, :custom) }, format: :js
+      answer.reload
+    end
+
+    let(:edit_answer_invalid) do
+      patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+      answer.reload
+    end
+
+    context 'answer creator' do
+      before { login(user) }
+
+      context 'with valid attributes' do
+        it 'changes answer attributes' do
+          edit_answer_valid
+          expect(answer.body).to eq attributes_for(:answer, :custom)[:body]
+        end
+
+        it 'renders javascript code from update view' do
+          edit_answer_valid
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change answer attributes' do
+          expect { edit_answer_invalid }.to_not change(answer, :body)
+        end
+
+        it 'renders javascript code from update view' do
+          edit_answer_invalid
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it 'does not change answer attributes' do
+        expect { edit_answer_valid }.to_not change(answer, :body)
+      end
+
+      it 'renders javascript code from update view' do
+        edit_answer_valid
+        expect(response).to render_template :update
       end
     end
   end
 
   describe 'DELETE #destroy' do
-    let!(:answer) { create(:answer, question_id: question.id, user_id: user.id) }
-    let(:delete_answer){ delete :destroy, params: { id: answer } }
+    let!(:answer) { create(:answer, question: question, user: user) }
+    let(:delete_answer){ delete :destroy, params: { id: answer }, format: :js }
 
     context 'answer creator' do
       before { login(user) }
@@ -49,9 +105,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete_answer }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to parent question show view' do
+      it 'renders javascript code from destroy view' do
         delete_answer
-        expect(response).to redirect_to question
+        expect(response).to render_template :destroy
       end
     end
 
@@ -64,9 +120,43 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete_answer }.to_not change(Answer, :count)
       end
 
-      it 're-renders parent question show view' do
+      it 'renders javascript code from destroy view' do
         delete_answer
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :destroy
+      end
+    end
+  end
+
+  describe 'PATCH #mark_as_best' do
+    let!(:answer) { create(:answer, question: question, user: user) }
+    let(:mark_answer_as_best){ patch :mark_as_best, params: { id: answer }, format: :js }
+
+    context 'questions creator' do
+      before { login(user) }
+
+      it "changes question's best answer to selected answer in database" do
+        mark_answer_as_best
+        expect(answer.question.reload.best_answer_id).to eq answer.id
+      end
+
+      it "renders javascript code from mark_as_best view" do
+        mark_answer_as_best
+        expect(response).to render_template :mark_as_best
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it "does not change question's best answer in database" do
+        expect { mark_answer_as_best }.to_not change(answer.question, :best_answer_id)
+      end
+
+      it "renders javascript code from mark_as_best view" do
+        mark_answer_as_best
+        expect(response).to render_template :mark_as_best
       end
     end
   end

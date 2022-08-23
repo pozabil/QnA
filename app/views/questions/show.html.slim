@@ -1,10 +1,22 @@
-h1 = @question.title
-p = @question.body
-p = delete_question(@question) if @question.user == current_user
+.question
+  h1 class='question-title' = @question.title
+  p class='question-body' = @question.body
 
+  - if @question.user == current_user
+    = form_with model: @question, html: { style: "display: none;" }, local: false do |f|
+      .question-errors
+      p = f.text_area :title
+      p = f.text_area :body
+      p = f.submit t('save')
 
-table
-  = render @question.answers
+    p = edit_question(@question)
+    p = delete_question(@question)
+
+.answers
+  table
+    = render 'answers/best_answer', answer: @best_answer
+    = render @other_answers
+
 = render 'answers/new'
 
 p = link_to t('back'), questions_path

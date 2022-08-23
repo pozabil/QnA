@@ -4,7 +4,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
 
   describe 'GET #index' do
-    let!(:questions) { create_list(:question, 5, user_id: user.id)}
+    let!(:questions) { create_list(:question, 5, user: user)}
 
     before { get :index }
 
@@ -18,19 +18,39 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let!(:question) { create(:question, user_id: user.id) }
-
-    before { get :show, params: { id: question } }
+    let!(:question) { create(:question, user: user) }
+    let(:get_show_question) { get :show, params: { id: question } }
+    let(:answers) { create_list(:answer, 5, question: question, user: user) }
+    let(:answer) { create(:answer, question: question, user: user) }
 
     it 'assigns the requested question to @question' do
+      get_show_question
       expect(assigns(:question)).to eq question
     end
 
+    it 'assigns best answer for questions to @best_answer' do
+      answers
+      answer.mark_as_best
+      get_show_question
+
+      expect(assigns(:best_answer)).to eq answer
+    end
+
+    it 'assigns others answers (except best) for questions to @other_answers' do
+      answers
+      answer.mark_as_best
+      get_show_question
+
+      expect(assigns(:other_answers)).to eq question.answers.where.not(id: answer)
+    end
+
     it 'assigns a new Answer to @answer' do
+      get_show_question
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
     it 'renders show view' do
+      get_show_question
       expect(response).to render_template :show
     end
   end
@@ -77,8 +97,67 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #create' do
+    let!(:question) { create(:question, user: user) }
+
+    let(:edit_question_valid) do
+      patch :update, params: { id: question, question: attributes_for(:question, :custom) }, format: :js
+      question.reload
+    end
+
+    let(:edit_question_invalid) do
+      patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+      question.reload
+    end
+
+    context 'question creator' do
+      RSpec::Matchers.define_negated_matcher :not_change, :change
+
+      before { login(user) }
+
+      context 'with valid attributes' do
+        it 'changes question attributes' do
+          edit_question_valid
+          expect(question.title).to eq attributes_for(:question, :custom)[:title]
+          expect(question.body).to eq attributes_for(:question, :custom)[:body]
+        end
+
+        it 'renders javascript code from update view' do
+          edit_question_valid
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change question attributes' do
+          expect { edit_question_invalid }.to not_change(question, :title).and not_change(question, :body)
+        end
+
+        it 'renders javascript code from update view' do
+          edit_question_invalid
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context 'another user' do
+      let(:another_user) { create(:user) }
+
+      before { login(another_user) }
+
+      it 'does not change question attributes' do
+        expect { edit_question_valid }.to not_change(question, :title).and not_change(question, :body)
+      end
+
+      it 'renders javascript code from update view' do
+        edit_question_valid
+        expect(response).to render_template :update
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
-    let!(:question) { create(:question, user_id: user.id) }
+    let!(:question) { create(:question, user: user) }
     let(:delete_question){ delete :destroy, params: { id: question } }
 
     context 'question creator' do

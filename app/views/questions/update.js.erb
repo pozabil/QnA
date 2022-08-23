@@ -1,0 +1,14 @@
+$('.notice').html('')
+
+<% if @question.errors.present? %>
+	$('.question .question-errors').html('<%= render 'shared/errors', resource: @question %>')
+<% else %>
+	$('.question question-errors').html('')
+	$('.question .question-title').show()
+	$('.question .question-title').html('<%= @question.title %>')
+	$('.question .question-body').show()
+	$('.question .question-body').html('<%= @question.body %>')
+	$('.question form').hide()
+	$('.notice').html('<%= notice %>')
+	$('.question .edit-question-link').show()
+<% end %>

@@ -1,6 +1,6 @@
-- if answer.persisted?
+- if answer.present? && answer.persisted?
 
-  tr id="answer-#{answer.id}"
+  tr class='best-answer' id="answer-#{answer.id}" data={'answer-id': answer.id}
     td class='answer-body' = answer.body
     - if answer.user == current_user
       td
@@ -11,4 +11,3 @@
 
       td = edit_answer(answer)
       td = delete_answer(answer)
-      td = mark_as_best(answer)

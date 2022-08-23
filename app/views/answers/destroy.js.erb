@@ -1,0 +1,6 @@
+$('.notice').html('')
+
+<% if !@answer.persisted? %>
+	$('.answers #answer-<%= @answer.id %>').remove()
+	$('.notice').html('<%= notice %>')
+<% end %>
