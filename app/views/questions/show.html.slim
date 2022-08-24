@@ -2,6 +2,10 @@
   h1 class='question-title' = @question.title
   p class='question-body' = @question.body
 
+  - if @question.files.attached?
+    - @question.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
+
   - if @question.user == current_user
     = form_with model: @question, html: { style: "display: none;" }, local: false do |f|
       .question-errors
