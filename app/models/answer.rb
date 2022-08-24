@@ -2,6 +2,8 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
+  has_many_attached :files
+
   validates :body, presence: true
 
   before_destroy :before_destroy_nullify_best_answer_for_question

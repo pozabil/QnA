@@ -12,3 +12,9 @@
       td = edit_answer(answer)
       td = delete_answer(answer)
       td = mark_as_best(answer)
+
+- if answer.files.attached?
+  tr id="answer-#{answer.id}-files"
+    td
+      - answer.files.each do |file|
+        div = link_to file.filename.to_s, url_for(file)
