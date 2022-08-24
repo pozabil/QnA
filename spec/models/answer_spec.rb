@@ -16,4 +16,15 @@ RSpec.describe Answer, type: :model do
       expect(answer.question.best_answer).to eq answer
     end
   end
+
+  context 'answer is best for some question' do
+    before { answer.mark_as_best }
+
+    describe '#destroy' do
+      it 'nullify best_answer_id for question when destroy answer' do
+        answer.destroy
+        expect(answer.question.best_answer).to be_nil
+      end
+    end
+  end
 end
