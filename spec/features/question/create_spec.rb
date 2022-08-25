@@ -35,7 +35,10 @@ feature 'User can create question', %q(
       fill_in 'Title', with: question_data[:title]
       fill_in 'Body', with: question_data[:body]
 
-      attach_file 'Files', ["#{Rails.root}/spec/features/question/create_spec.rb", "#{Rails.root}/app/models/question.rb"]
+      attach_file 'Files', [
+        "#{Rails.root}/spec/features/question/create_spec.rb",
+        "#{Rails.root}/app/models/question.rb"
+      ]
       click_on 'Ask'
 
       expect(page).to have_link 'create_spec.rb'

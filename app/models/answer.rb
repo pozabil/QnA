@@ -12,6 +12,10 @@ class Answer < ApplicationRecord
     question.update(best_answer_id: self.id)
   end
 
+  def append_files=(attachables)
+    files.attach(attachables)
+  end
+
   private
 
   def before_destroy_nullify_best_answer_for_question

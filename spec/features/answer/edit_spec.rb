@@ -45,6 +45,68 @@ feature 'User can edit answer', %q(
       end
     end
 
+    describe 'tries to edit their answer for attach files' do
+      scenario 'answer has no attached files' do
+        visit question_path(question)
+
+        within(".answers #answer-#{answer.id}") do
+          click_on 'Edit'
+          attach_file 'answer[append_files][]', [
+            "#{Rails.root}/spec/features/answer/edit_spec.rb",
+            "#{Rails.root}/app/models/answer.rb"
+          ]
+          click_on 'Save'
+
+          sleep(1)
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'answer.rb'
+        end
+
+        expect(page).to have_content 'Your answer has been successfully edited'
+      end
+
+      scenario 'answer already has attached files' do
+        answer.files.attach(io: File.open("#{Rails.root}/app/controllers/answers_controller.rb"), filename: "answers_controller.rb")
+        visit question_path(question)
+
+        within(".answers #answer-#{answer.id}") do
+          click_on 'Edit'
+          attach_file 'answer[append_files][]', [
+            "#{Rails.root}/spec/features/answer/edit_spec.rb",
+            "#{Rails.root}/app/models/answer.rb"
+          ]
+          click_on 'Save'
+
+          sleep(1)
+          expect(page).to have_link 'answers_controller.rb'
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'answer.rb'
+        end
+
+        expect(page).to have_content 'Your answer has been successfully edited'
+      end
+
+      scenario 'answer is best for some question' do
+        answer.mark_as_best
+        visit question_path(question)
+
+        within(".answers .best-answer#answer-#{answer.id}") do
+          click_on 'Edit'
+          attach_file 'answer[append_files][]', [
+            "#{Rails.root}/spec/features/answer/edit_spec.rb",
+            "#{Rails.root}/app/models/answer.rb"
+          ]
+          click_on 'Save'
+
+          sleep(1)
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'answer.rb'
+        end
+
+        expect(page).to have_content 'Your answer has been successfully edited'
+      end
+    end
+
     scenario "tries to edit someone else's answer" do
       another_user = create(:user)
       another_answer = create(:answer, question: question, user: another_user)

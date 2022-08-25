@@ -37,7 +37,10 @@ feature 'User can create answer', %q(
       within('.new-answer') do
         fill_in 'Your Answer', with: answer_data[:body]
 
-        attach_file 'Files', ["#{Rails.root}/spec/features/answer/create_spec.rb", "#{Rails.root}/app/models/answer.rb"]
+        attach_file 'answer[files][]', [
+          "#{Rails.root}/spec/features/answer/create_spec.rb",
+          "#{Rails.root}/app/models/answer.rb"
+        ]
         click_on 'Post Your Answer'
       end
 

@@ -63,6 +63,8 @@ feature 'User can edit question', %q(
           expect(page).to have_link 'edit_spec.rb'
           expect(page).to have_link 'question.rb'
         end
+
+        expect(page).to have_content 'Your question has been successfully edited'
       end
 
       scenario 'question already has attached files' do
@@ -82,6 +84,8 @@ feature 'User can edit question', %q(
           expect(page).to have_link 'edit_spec.rb'
           expect(page).to have_link 'question.rb'
         end
+
+        expect(page).to have_content 'Your question has been successfully edited'
       end
     end
 

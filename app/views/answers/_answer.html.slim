@@ -4,17 +4,19 @@
     td class='answer-body' = answer.body
     - if answer.user == current_user
       td
-        = form_with model: answer, html: { style: "display: none;" }, local: false do |f|
+        = form_with model: answer, class: 'edit-answer-form', html: { style: "display: none;" }, local: false do |f|
           .answer-errors
-          = f.text_area :body
-          = f.submit t('save')
+          div = f.text_area :body
+          div = f.file_field :append_files, multiple: true
+          div = f.submit t('save')
 
+    td class='files'
+      - if answer.files.attached?
+        - answer.files.each do |file|
+          div = link_to short_filename(file), url_for(file)
+
+    - if answer.user == current_user
       td = edit_answer(answer)
       td = delete_answer(answer)
       td = mark_as_best(answer)
 
-- if answer.files.attached?
-  tr id="answer-#{answer.id}-files"
-    td
-      - answer.files.each do |file|
-        div = link_to short_filename(file), url_for(file)

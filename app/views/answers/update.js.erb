@@ -6,7 +6,11 @@ $('.notice').html('')
 	$('.answers #answer-<%= @answer.id %> .answer-errors').html('')
 	$('.answers #answer-<%= @answer.id %> .answer-body').show()
 	$('.answers #answer-<%= @answer.id %> .answer-body').html('<%= j @answer.body %>')
-	$('.answers #answer-<%= @answer.id %> form').hide()
+	$('.answers #answer-<%= @answer.id %> .files').html(
+		'<%= j sanitize @answer.files.map { |file| content_tag :div, (link_to short_filename(file), url_for(file)) }.join('') %>'
+		)
+	$('.answers #answer-<%= @answer.id %> form.edit-answer-form').hide()
+	$('.answers #answer-<%= @answer.id %> td.balancing-column').remove()
 	$('.notice').html('<%= notice %>')
 	$('.answers .edit-answer-link[data-answer-id="<%= @answer.id %>"]').show()
 <% end %>

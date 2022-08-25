@@ -21,6 +21,13 @@ RSpec.describe Answer, type: :model do
     end
   end
 
+  describe '#append_files=' do
+    it 'adds files to answer' do
+      answer.append_files = {io: File.open("#{Rails.root}/spec/models/answer_spec.rb"), filename: 'answer_spec.rb'}
+      expect(answer.files.last.filename.to_s).to eq 'answer_spec.rb'
+    end
+  end
+
   context 'answer is best for some question' do
     before { answer.mark_as_best }
 
