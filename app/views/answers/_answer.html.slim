@@ -17,4 +17,4 @@
   tr id="answer-#{answer.id}-files"
     td
       - answer.files.each do |file|
-        div = link_to file.filename.to_s, url_for(file)
+        div = link_to short_filename(file), url_for(file)

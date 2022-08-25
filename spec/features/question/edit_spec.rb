@@ -47,6 +47,44 @@ feature 'User can edit question', %q(
       end
     end
 
+    describe 'tries to edit their question for attach files' do
+      scenario 'question has no attached files' do
+        visit question_path(question)
+
+        within('.question') do
+          click_on 'Edit question'
+          attach_file 'question[append_files][]', [
+            "#{Rails.root}/spec/features/question/edit_spec.rb",
+            "#{Rails.root}/app/models/question.rb"
+          ]
+          click_on 'Save'
+
+          sleep(1)
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'question.rb'
+        end
+      end
+
+      scenario 'question already has attached files' do
+        question.files.attach(io: File.open("#{Rails.root}/app/controllers/questions_controller.rb"), filename: "questions_controller.rb")
+        visit question_path(question)
+
+        within('.question') do
+          click_on 'Edit question'
+          attach_file 'question[append_files][]', [
+            "#{Rails.root}/spec/features/question/edit_spec.rb",
+            "#{Rails.root}/app/models/question.rb"
+          ]
+          click_on 'Save'
+
+          sleep(1)
+          expect(page).to have_link 'questions_controller.rb'
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'question.rb'
+        end
+      end
+    end
+
     scenario "tries to edit someone else's question" do
       another_user = create(:user)
       another_question = create(:question, user: another_user)

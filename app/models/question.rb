@@ -6,4 +6,8 @@ class Question < ApplicationRecord
   has_many_attached :files
 
   validates :title, :body, presence: true
+
+  def append_files=(attachables)
+    files.attach(attachables)
+  end
 end

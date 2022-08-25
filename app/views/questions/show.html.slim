@@ -2,17 +2,20 @@
   h1 class='question-title' = @question.title
   p class='question-body' = @question.body
 
-  - if @question.files.attached?
-    - @question.files.each do |file|
-      div = link_to file.filename.to_s, url_for(file)
-
   - if @question.user == current_user
     = form_with model: @question, html: { style: "display: none;" }, local: false do |f|
       .question-errors
       p = f.text_area :title
       p = f.text_area :body
+      p = f.file_field :append_files, multiple: true
       p = f.submit t('save')
 
+  .question-files
+    - if @question.files.attached?
+      - @question.files.each do |file|
+        div = link_to short_filename(file), url_for(file)
+
+  - if @question.user == current_user
     p = edit_question(@question)
     p = delete_question(@question)
 
