@@ -12,8 +12,7 @@
 
   .question-files
     - if @question.files.attached?
-      - @question.files.each do |file|
-        div = link_to short_filename(file), url_for(file)
+      = render @question.files
 
   - if @question.user == current_user
     p = edit_question(@question)

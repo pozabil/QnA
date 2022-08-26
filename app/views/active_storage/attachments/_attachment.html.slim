@@ -1,0 +1,6 @@
+div id="attachment-#{attachment.id}"
+  = link_to short_filename(attachment), url_for(attachment)
+  - if attachment.record.user == current_user
+    span class='remove_attachment_link' style="display: none;"
+      = ' | '
+      = remove_attachment(attachment)

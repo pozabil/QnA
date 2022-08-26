@@ -8,10 +8,9 @@ $('.notice').html('')
 	$('.question .question-title').html('<%= j @question.title %>')
 	$('.question .question-body').show()
 	$('.question .question-body').html('<%= j @question.body %>')
-	$('.question .question-files').html(
-		'<%= j sanitize @question.files.map { |file| content_tag :div, (link_to short_filename(file), url_for(file)) }.join('') %>'
-		)
+	$('.question .question-files').html('<%= j render @question.files if @question.files.attached? %>')
 	$('.question form').hide()
+	$('.question .remove_attachment_link').hide()
 	$('.notice').html('<%= notice %>')
 	$('.question .edit-question-link').show()
 <% end %>

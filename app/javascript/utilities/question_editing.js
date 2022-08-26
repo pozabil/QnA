@@ -7,6 +7,7 @@ document.addEventListener('turbolinks:load', function() {
 			$('.question .question-title').hide()
 			$('.question .question-body').hide()
 			$('.question form').show()
+			$('.question .remove_attachment_link').show()
 		})
 	}
 })

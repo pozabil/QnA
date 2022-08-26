@@ -9,14 +9,14 @@
           div = f.text_area :body
           div = f.file_field :append_files, multiple: true
           div = f.submit t('save')
+    - else
+      td
 
-    td class='files'
+    td class='answer-files'
       - if answer.files.attached?
-        - answer.files.each do |file|
-          div = link_to short_filename(file), url_for(file)
+        = render answer.files
 
     - if answer.user == current_user
       td = edit_answer(answer)
       td = delete_answer(answer)
       td = mark_as_best(answer)
-

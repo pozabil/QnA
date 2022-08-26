@@ -79,7 +79,7 @@ feature 'User can edit question', %q(
           ]
           click_on 'Save'
 
-          sleep(1)
+          
           expect(page).to have_link 'questions_controller.rb'
           expect(page).to have_link 'edit_spec.rb'
           expect(page).to have_link 'question.rb'
@@ -87,6 +87,26 @@ feature 'User can edit question', %q(
 
         expect(page).to have_content 'Your question has been successfully edited'
       end
+    end
+
+    scenario 'tries to edit their question for remove files' do
+      question.files.attach(io: File.open("#{Rails.root}/spec/features/question/edit_spec.rb"), filename: "edit_spec.rb")
+      question.files.attach(io: File.open("#{Rails.root}/app/models/question.rb"), filename: "question.rb")
+      question.files.attach(io: File.open("#{Rails.root}/app/controllers/questions_controller.rb"), filename: "questions_controller.rb")
+      attached_file = question.files.find(question.files.ids[1]) # question.rb
+      visit question_path(question)
+
+      within('.question') do
+        click_on 'Edit question'
+
+        within(".question-files #attachment-#{attached_file.id}") { click_link 'Remove' }
+
+        sleep(1)
+        expect(page).to have_link 'questions_controller.rb'
+        expect(page).to have_link 'edit_spec.rb'
+        expect(page).to_not have_link 'question.rb'
+      end
+
     end
 
     scenario "tries to edit someone else's question" do
