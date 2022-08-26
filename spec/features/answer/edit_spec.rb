@@ -85,25 +85,24 @@ feature 'User can edit answer', %q(
 
         expect(page).to have_content 'Your answer has been successfully edited'
       end
+    end
 
-      scenario 'answer is best for some question' do
-        answer.mark_as_best
-        visit question_path(question)
+    scenario 'tries to edit their answer for remove files' do
+      answer.files.attach(io: File.open("#{Rails.root}/spec/features/answer/edit_spec.rb"), filename: "edit_spec.rb")
+      answer.files.attach(io: File.open("#{Rails.root}/app/models/answer.rb"), filename: "answer.rb")
+      answer.files.attach(io: File.open("#{Rails.root}/app/controllers/answers_controller.rb"), filename: "answers_controller.rb")
+      attached_file = answer.files.find(answer.files.ids[1]) # answer.rb
+      visit question_path(question)
 
-        within(".answers .best-answer#answer-#{answer.id}") do
-          click_on 'Edit'
-          attach_file 'answer[append_files][]', [
-            "#{Rails.root}/spec/features/answer/edit_spec.rb",
-            "#{Rails.root}/app/models/answer.rb"
-          ]
-          click_on 'Save'
+      within(".answers #answer-#{answer.id}") do
+        click_on 'Edit'
 
-          sleep(1)
-          expect(page).to have_link 'edit_spec.rb'
-          expect(page).to have_link 'answer.rb'
-        end
+        within(".answer-files #attachment-#{attached_file.id}") { click_link 'Remove' }
 
-        expect(page).to have_content 'Your answer has been successfully edited'
+        sleep(1)
+        expect(page).to have_link 'answers_controller.rb'
+        expect(page).to have_link 'edit_spec.rb'
+        expect(page).to_not have_link 'answers.rb'
       end
     end
 

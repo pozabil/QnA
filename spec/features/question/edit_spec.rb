@@ -106,7 +106,6 @@ feature 'User can edit question', %q(
         expect(page).to have_link 'edit_spec.rb'
         expect(page).to_not have_link 'question.rb'
       end
-
     end
 
     scenario "tries to edit someone else's question" do
