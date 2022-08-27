@@ -19,6 +19,6 @@ class Answer < ApplicationRecord
   private
 
   def before_destroy_nullify_best_answer_for_question
-    question.update(best_answer_id: nil) if question.best_answer = self
+    question.update(best_answer_id: nil) if question.best_answer == self
   end
 end
