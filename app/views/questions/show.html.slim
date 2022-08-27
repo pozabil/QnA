@@ -7,7 +7,7 @@
       .question-errors
       p = f.text_area :title
       p = f.text_area :body
-      p = f.file_field :append_files, multiple: true
+      p = f.file_field :append_files, multiple: true, direct_upload: true
       p = f.submit t('save')
 
   .question-files

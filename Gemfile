@@ -32,12 +32,14 @@ gem 'slim-rails'
 # gem 'decent_exposure', '~> 3.0'
 gem 'devise'
 # gem 'jquery-rails'
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 5.0'
   gem 'factory_bot_rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
