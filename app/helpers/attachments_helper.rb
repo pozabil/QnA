@@ -1,9 +1,9 @@
 module AttachmentsHelper
-  def short_filename(file)
-    name_length = 30
+  SHORT_FILENAME_LENGTH = 30
 
-    if file.filename.to_s.length > name_length
-      file.filename.to_s[0, (name_length - 2 - file.filename.extension_with_delimiter.length)] + '..' + file.filename.extension_with_delimiter
+  def short_filename(file)
+    if file.filename.to_s.length > SHORT_FILENAME_LENGTH
+      file.filename.to_s[0, (SHORT_FILENAME_LENGTH - 2 - file.filename.extension_with_delimiter.length)] + '..' + file.filename.extension_with_delimiter
     else
       file.filename.to_s
     end
