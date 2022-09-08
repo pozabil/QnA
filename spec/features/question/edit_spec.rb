@@ -47,6 +47,67 @@ feature 'User can edit question', %q(
       end
     end
 
+    describe 'tries to edit their question for attach files' do
+      scenario 'question has no attached files' do
+        visit question_path(question)
+
+        within('.question') do
+          click_on 'Edit question'
+          attach_file 'question[append_files][]', [
+            "#{Rails.root}/spec/features/question/edit_spec.rb",
+            "#{Rails.root}/app/models/question.rb"
+          ]
+          click_on 'Save'
+
+          sleep(1)
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'question.rb'
+        end
+
+        expect(page).to have_content 'Your question has been successfully edited'
+      end
+
+      scenario 'question already has attached files' do
+        question.files.attach(io: File.open("#{Rails.root}/app/controllers/questions_controller.rb"), filename: "questions_controller.rb")
+        visit question_path(question)
+
+        within('.question') do
+          click_on 'Edit question'
+          attach_file 'question[append_files][]', [
+            "#{Rails.root}/spec/features/question/edit_spec.rb",
+            "#{Rails.root}/app/models/question.rb"
+          ]
+          click_on 'Save'
+
+          
+          expect(page).to have_link 'questions_controller.rb'
+          expect(page).to have_link 'edit_spec.rb'
+          expect(page).to have_link 'question.rb'
+        end
+
+        expect(page).to have_content 'Your question has been successfully edited'
+      end
+    end
+
+    scenario 'tries to edit their question for remove files' do
+      question.files.attach(io: File.open("#{Rails.root}/spec/features/question/edit_spec.rb"), filename: "edit_spec.rb")
+      question.files.attach(io: File.open("#{Rails.root}/app/models/question.rb"), filename: "question.rb")
+      question.files.attach(io: File.open("#{Rails.root}/app/controllers/questions_controller.rb"), filename: "questions_controller.rb")
+      attached_file = question.files.find(question.files.ids[1]) # question.rb
+      visit question_path(question)
+
+      within('.question') do
+        click_on 'Edit question'
+
+        within(".question-files #attachment-#{attached_file.id}") { click_link 'Remove' }
+
+        sleep(1)
+        expect(page).to have_link 'questions_controller.rb'
+        expect(page).to have_link 'edit_spec.rb'
+        expect(page).to_not have_link 'question.rb'
+      end
+    end
+
     scenario "tries to edit someone else's question" do
       another_user = create(:user)
       another_question = create(:question, user: another_user)

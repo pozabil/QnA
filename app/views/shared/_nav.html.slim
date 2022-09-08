@@ -1,2 +1,2 @@
 nav
-  div style="text-align:right" = signout_link
+  div style="text-align:right" = current_user ? sign_out_link : (sign_up_link + ' | ' + sign_in_link)

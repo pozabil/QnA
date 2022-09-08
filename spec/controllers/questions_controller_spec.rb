@@ -97,7 +97,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'PATCH #create' do
+  describe 'PATCH #update' do
     let!(:question) { create(:question, user: user) }
 
     let(:edit_question_valid) do

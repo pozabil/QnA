@@ -23,6 +23,16 @@ feature 'User can delete their answer to question', %q(
       expect(page).to have_content 'Your answer has been deleted'
     end
 
+    scenario 'tries to delete their best answer' do
+      answer.mark_as_best
+      visit question_path(question)
+
+      within(".answers .best-answer") { accept_alert { click_link 'Delete' } }
+
+      expect(page).to_not have_content answer.body
+      expect(page).to have_content 'Your answer has been deleted'
+    end
+
     scenario "tries to delete someone else's answer" do
       another_user = create(:user)
       another_answer = create(:answer, question: question, user: another_user)

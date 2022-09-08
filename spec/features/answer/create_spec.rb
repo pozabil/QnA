@@ -17,8 +17,10 @@ feature 'User can create answer', %q(
     end
 
     scenario 'tries to give answer' do
-      fill_in 'Your Answer', with: answer_data[:body]
-      click_on 'Post Your Answer'
+      within('.new-answer') do
+        fill_in 'Your Answer', with: answer_data[:body]
+        click_on 'Post Your Answer'
+      end
 
       expect(current_path).to eq question_path(question)
       expect(page).to have_content 'Your answer successfuly posted'
@@ -26,15 +28,32 @@ feature 'User can create answer', %q(
     end
 
     scenario 'tries to give answer with errors' do
-      click_on 'Post Your Answer'
+      within('.new-answer') { click_on 'Post Your Answer' }
 
       expect(page).to have_content "Body can't be blank"
     end
+
+    scenario 'tries to give answer with files' do
+      within('.new-answer') do
+        fill_in 'Your Answer', with: answer_data[:body]
+
+        attach_file 'answer[files][]', [
+          "#{Rails.root}/spec/features/answer/create_spec.rb",
+          "#{Rails.root}/app/models/answer.rb"
+        ]
+        click_on 'Post Your Answer'
+      end
+
+      within('.answers') do
+        expect(page).to have_link 'create_spec.rb'
+        expect(page).to have_link 'answer.rb'
+      end
+    end
   end
 
-  scenario 'Unauthenticated user tries to give answer' do
+  scenario 'Unauthenticated user tries to give answer', js: true do
     visit question_path(question)
-    click_on 'Post Your Answer'
+    within('.new-answer') { click_on 'Post Your Answer' }
 
     expect(page).to have_content I18n.t('devise.failure.unauthenticated')
   end

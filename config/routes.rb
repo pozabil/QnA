@@ -8,4 +8,6 @@ Rails.application.routes.draw do
       member { patch :mark_as_best }
     end
   end
+
+  resources :attachments, only: :destroy
 end
