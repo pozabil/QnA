@@ -10,10 +10,12 @@ class QuestionsController < ApplicationController
     @best_answer = @question.best_answer
     @other_answers = @question.answers.where.not(id: @question.best_answer_id)
     @answer = @question.answers.new
+    @answer.links.new
   end
 
   def new
     @question = current_user.questions.new
+    @question.links.new
   end
 
   def create
@@ -49,6 +51,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], append_files: [])
+    params.require(:question).permit(:title, :body, files: [], append_files: [], links_attributes: [:name, :url])
   end
 end

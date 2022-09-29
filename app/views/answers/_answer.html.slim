@@ -12,6 +12,10 @@
     - else
       td
 
+    td class='answer-links'
+      - if answer.links.present?
+        = render answer.links
+
     td class='answer-files'
       - if answer.files.attached?
         = render answer.files

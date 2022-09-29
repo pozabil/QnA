@@ -1,0 +1,9 @@
+.nested-fields
+  .name
+    = f.label :name
+    = f.text_field :name
+  .url
+    = f.label :url
+    = f.text_field :url
+  .remove-link
+    = link_to_remove_association f

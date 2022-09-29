@@ -10,6 +10,10 @@
       p = f.file_field :append_files, multiple: true, direct_upload: true
       p = f.submit t('save')
 
+  .question-links
+    - if @question.links.present?
+      = render @question.links
+
   .question-files
     - if @question.files.attached?
       = render @question.files

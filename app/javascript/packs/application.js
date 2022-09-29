@@ -10,6 +10,7 @@ import "channels"
 import "jquery"
 import "utilities/answer_editing"
 import "utilities/question_editing"
+import "@nathanvda/cocoon"
 
 Rails.start()
 Turbolinks.start()

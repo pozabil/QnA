@@ -16,6 +16,9 @@ en:
     label:
       answer:
         body: "Your Answer"
+      link:
+        name: "Link name"
+        url: "Link URL"
 
   questions:
     create:
