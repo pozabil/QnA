@@ -8,7 +8,9 @@ feature 'User can add links to answer', %q(
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
   given(:answer_data) { attributes_for(:answer) }
-  given(:correct_link) { {name: 'google', url: 'google.com'} }
+  given(:correct_link_data) { attributes_for(:link, :correct) }
+  given(:another_correct_link_data) { attributes_for(:link, :another_correct) }
+  given(:wrong_link_data) { attributes_for(:link, :wrong) }
 
   background { login(user) }
 
@@ -20,17 +22,27 @@ feature 'User can add links to answer', %q(
 
     scenario 'correct link' do
       within('.new-answer') do
-        fill_in 'Link name', with: correct_link[:name]
-        fill_in 'Link URL', with: correct_link[:url]
+        fill_in 'Link name', with: correct_link_data[:name]
+        fill_in 'Link URL', with: correct_link_data[:url]
         click_on 'Post Your Answer'
       end
 
-      within('.answers') { expect(page).to have_link correct_link[:name], href: correct_link[:url] }
+      within('.answers') { expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url]) }
+    end
+
+    scenario 'wrong link' do
+      within('.new-answer') do
+        fill_in 'Link name', with: wrong_link_data[:name]
+        fill_in 'Link URL', with: wrong_link_data[:url]
+        click_on 'Post Your Answer'
+      end
+
+      expect(page).to have_content 'url is invalid'
+      expect(page).to_not have_link wrong_link_data[:name], href: Link.format_url(wrong_link_data[:url])
     end
   end
 
   scenario 'User adds multiple links when gives answer', js: true do
-    another_correct_link = {name: 'thinknetica', url: 'thinknetica.com'}
     visit question_path(question)
 
     within('.new-answer') do
@@ -38,15 +50,15 @@ feature 'User can add links to answer', %q(
 
       within('.links') do
         within('.nested-fields') do
-          fill_in 'Link name', with: correct_link[:name]
-          fill_in 'Link URL', with: correct_link[:url]
+          fill_in 'Link name', with: correct_link_data[:name]
+          fill_in 'Link URL', with: correct_link_data[:url]
         end
 
         click_link 'Add Link'
 
         within all('.nested-fields').last do
-          fill_in 'Link name', with: another_correct_link[:name]
-          fill_in 'Link URL', with: another_correct_link[:url]
+          fill_in 'Link name', with: another_correct_link_data[:name]
+          fill_in 'Link URL', with: another_correct_link_data[:url]
         end
       end
 
@@ -54,8 +66,8 @@ feature 'User can add links to answer', %q(
     end
 
     within('.answers') do
-      expect(page).to have_link correct_link[:name], href: correct_link[:url]
-      expect(page).to have_link another_correct_link[:name], href: another_correct_link[:url]
+      expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url])
+      expect(page).to have_link another_correct_link_data[:name], href: Link.format_url(another_correct_link_data[:url])
     end
   end
 end
