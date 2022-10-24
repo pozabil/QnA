@@ -1,6 +1,6 @@
 - if answer.persisted?
 
-  tr id="answer-#{answer.id}"
+  tr class='answer' id="answer-#{answer.id}"
     td class='answer-body' = answer.body
     - if answer.user == current_user
       td

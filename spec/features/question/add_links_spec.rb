@@ -10,6 +10,10 @@ feature 'User can add links to question', %q(
   given(:correct_link_data) { attributes_for(:link, :correct) }
   given(:another_correct_link_data) { attributes_for(:link, :another_correct) }
   given(:wrong_link_data) { attributes_for(:link, :wrong) }
+  given(:gist_plain_text_link_data) { attributes_for(:link, :gist_plain_text) }
+  given(:gist_html_js_code_link_data) { attributes_for(:link, :gist_html_js_code) }
+  given(:gist_multiple_files_link_data) { attributes_for(:link, :gist_multiple_files) }
+  given(:wrong_gist_link_data) { attributes_for(:link, :wrong_gist) }
 
   background { login(user) }
 
@@ -35,6 +39,69 @@ feature 'User can add links to question', %q(
 
       expect(page).to have_content 'url is invalid'
       expect(page).to_not have_link wrong_link_data[:name], href: Link.format_url(wrong_link_data[:url])
+    end
+
+    describe 'gist link', billy: true do
+      scenario 'plain text' do
+        gist_id = gist_plain_text_link_data[:url].split('/').last
+        stub_gist_request(gist_id, 200)
+
+        fill_in 'Link name', with: gist_plain_text_link_data[:name]
+        fill_in 'Link URL', with: gist_plain_text_link_data[:url]
+        click_on 'Ask'
+        sleep(1)
+
+        expect(page).to have_link gist_plain_text_link_data[:name], href: Link.format_url(gist_plain_text_link_data[:url])
+        Octokit.gist(gist_id).files.each do |k, v|
+          expect(page).to have_content correct_text_for_expect(v.filename)
+          expect(page).to have_content correct_text_for_expect(v.content)
+        end
+      end
+
+      scenario 'html_js_code' do
+        gist_id = gist_html_js_code_link_data[:url].split('/').last
+        stub_gist_request(gist_id, 200)
+
+        fill_in 'Link name', with: gist_html_js_code_link_data[:name]
+        fill_in 'Link URL', with: gist_html_js_code_link_data[:url]
+        click_on 'Ask'
+        sleep(1)
+
+        expect(page).to have_link gist_html_js_code_link_data[:name], href: Link.format_url(gist_html_js_code_link_data[:url])
+        Octokit.gist(gist_id).files.each do |k, v|
+          expect(page).to have_content correct_text_for_expect(v.filename)
+          expect(page).to have_content correct_text_for_expect(v.content)
+        end
+      end
+
+      scenario 'multiple_files' do
+        gist_id = gist_multiple_files_link_data[:url].split('/').last
+        stub_gist_request(gist_id, 200)
+
+        fill_in 'Link name', with: gist_multiple_files_link_data[:name]
+        fill_in 'Link URL', with: gist_multiple_files_link_data[:url]
+        click_on 'Ask'
+        sleep(1)
+
+        expect(page).to have_link gist_multiple_files_link_data[:name], href: Link.format_url(gist_multiple_files_link_data[:url])
+        Octokit.gist(gist_id).files.each do |k, v|
+          expect(page).to have_content correct_text_for_expect(v.filename)
+          expect(page).to have_content correct_text_for_expect(v.content)
+        end
+      end
+
+      scenario 'wrong gist' do
+        gist_id = wrong_gist_link_data[:url].split('/').last
+        stub_gist_request(gist_id, 404)
+
+        fill_in 'Link name', with: wrong_gist_link_data[:name]
+        fill_in 'Link URL', with: wrong_gist_link_data[:url]
+        click_on 'Ask'
+        sleep(1)
+
+        wrong_gist_link_text = wrong_gist_link_data[:name] + '(invalid gist URL)'
+        expect(page).to have_link wrong_gist_link_text, href: Link.format_url(wrong_gist_link_data[:url])
+      end
     end
   end
 

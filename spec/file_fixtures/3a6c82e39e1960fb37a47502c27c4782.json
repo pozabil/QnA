@@ -1,0 +1,84 @@
+{
+  "url": "https://api.github.com/gists/3a6c82e39e1960fb37a47502c27c4782",
+  "forks_url": "https://api.github.com/gists/3a6c82e39e1960fb37a47502c27c4782/forks",
+  "commits_url": "https://api.github.com/gists/3a6c82e39e1960fb37a47502c27c4782/commits",
+  "id": "3a6c82e39e1960fb37a47502c27c4782",
+  "node_id": "G_kwDOBTqWLNoAIDNhNmM4MmUzOWUxOTYwZmIzN2E0NzUwMmMyN2M0Nzgy",
+  "git_pull_url": "https://gist.github.com/3a6c82e39e1960fb37a47502c27c4782.git",
+  "git_push_url": "https://gist.github.com/3a6c82e39e1960fb37a47502c27c4782.git",
+  "html_url": "https://gist.github.com/3a6c82e39e1960fb37a47502c27c4782",
+  "files": {
+    "js_test_example_script.js": {
+      "filename": "js_test_example_script.js",
+      "type": "application/javascript",
+      "language": "JavaScript",
+      "raw_url": "https://gist.githubusercontent.com/pozabil/3a6c82e39e1960fb37a47502c27c4782/raw/e0e6fab797c7822359fb53da93477e1dde61464d/js_test_example_script.js",
+      "size": 402,
+      "truncated": false,
+      "content": "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>Встроенный JS</title>\n\n<script>\n\t// JavaScript-код может быть размещён внутри блока script\t\n\tdocument.write(\"Вывод текста прямо в браузер\");\n</script>\n\n</head>\n<body>\n    <h1>Допустимый способ подключения JS на странице</h1>\n</body>\n</html>"
+    }
+  },
+  "public": false,
+  "created_at": "2022-10-21T11:37:01Z",
+  "updated_at": "2022-10-21T11:37:01Z",
+  "description": "js_test_example",
+  "comments": 0,
+  "user": null,
+  "comments_url": "https://api.github.com/gists/3a6c82e39e1960fb37a47502c27c4782/comments",
+  "owner": {
+    "login": "pozabil",
+    "id": 87725612,
+    "node_id": "MDQ6VXNlcjg3NzI1NjEy",
+    "avatar_url": "https://avatars.githubusercontent.com/u/87725612?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/pozabil",
+    "html_url": "https://github.com/pozabil",
+    "followers_url": "https://api.github.com/users/pozabil/followers",
+    "following_url": "https://api.github.com/users/pozabil/following{/other_user}",
+    "gists_url": "https://api.github.com/users/pozabil/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/pozabil/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/pozabil/subscriptions",
+    "organizations_url": "https://api.github.com/users/pozabil/orgs",
+    "repos_url": "https://api.github.com/users/pozabil/repos",
+    "events_url": "https://api.github.com/users/pozabil/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/pozabil/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "forks": [
+
+  ],
+  "history": [
+    {
+      "user": {
+        "login": "pozabil",
+        "id": 87725612,
+        "node_id": "MDQ6VXNlcjg3NzI1NjEy",
+        "avatar_url": "https://avatars.githubusercontent.com/u/87725612?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/pozabil",
+        "html_url": "https://github.com/pozabil",
+        "followers_url": "https://api.github.com/users/pozabil/followers",
+        "following_url": "https://api.github.com/users/pozabil/following{/other_user}",
+        "gists_url": "https://api.github.com/users/pozabil/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/pozabil/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/pozabil/subscriptions",
+        "organizations_url": "https://api.github.com/users/pozabil/orgs",
+        "repos_url": "https://api.github.com/users/pozabil/repos",
+        "events_url": "https://api.github.com/users/pozabil/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/pozabil/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "version": "bf813002e7acc2c395c0d0a2d874684f71007de8",
+      "committed_at": "2022-10-21T11:37:01Z",
+      "change_status": {
+        "total": 16,
+        "additions": 16,
+        "deletions": 0
+      },
+      "url": "https://api.github.com/gists/3a6c82e39e1960fb37a47502c27c4782/bf813002e7acc2c395c0d0a2d874684f71007de8"
+    }
+  ],
+  "truncated": false
+}

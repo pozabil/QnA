@@ -8,6 +8,8 @@ $('.notice').html('')
 	$('.new-answer #answer_files').val(null)
 	$('.new-answer #answer_files').prop('disabled', false)
 	$('.notice').html('<%= notice %>')
+	$('.new-answer .nested-fields').not(':first').remove()
+	$('.new-answer .nested-fields div :text').val(null)
 <% else %>
 	$('.new-answer .answer-errors').html('<%= render 'shared/errors', resource: @answer %>')
 <% end %>

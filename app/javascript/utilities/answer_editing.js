@@ -1,5 +1,5 @@
 document.addEventListener('turbolinks:load', function() {
-	if ($('.answers')) {
+	if ($('.answers').length) {
 		$('.answers').on('click', '.edit-answer-link', function(event) {
 			event.preventDefault()
 			var answerId = $(this).data('answerId')

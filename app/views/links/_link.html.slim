@@ -1,2 +1,5 @@
 div
-  = link_to link.name, link.url
+  - if link.gist?
+    = link_to link.name, link.url, class: 'gist-link', data: { gist_link_name: link.name }
+  - else
+    = link_to link.name, link.url

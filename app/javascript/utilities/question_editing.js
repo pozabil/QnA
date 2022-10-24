@@ -1,5 +1,5 @@
 document.addEventListener('turbolinks:load', function() {
-	if ($('.question')) {
+	if ($('.question').length) {
 		$('.question').on('click', '.edit-question-link', function(event) {
 			event.preventDefault()
 

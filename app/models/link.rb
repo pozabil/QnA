@@ -14,6 +14,16 @@ class Link < ApplicationRecord
     url
   end
 
+  def gist?
+    uri = URI(url)
+    if uri.host == 'gist.github.com' && uri.path.present? &&
+      uri.path[1..-1].split('/').size == 2 && uri.path[1..-1].split('/').last != 'starred'
+      true
+    else
+      false
+    end
+  end
+
   private
 
   def before_validation_smart_formatting_url

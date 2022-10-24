@@ -7,10 +7,13 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import "jquery"
+// import "jquery"
 import "utilities/answer_editing"
 import "utilities/question_editing"
 import "@nathanvda/cocoon"
+// import * as _ from "underscore"
+// import * as Gh3 from "gh3"
+import "utilities/gist_preview_loader"
 
 Rails.start()
 Turbolinks.start()
