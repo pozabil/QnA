@@ -4,7 +4,7 @@ RSpec.describe AttachmentsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
 
-  describe 'DELETE #remove_file' do
+  describe 'DELETE #destroy' do
     let!(:file) do
       question.files.attach(io: File.open("#{Rails.root}/spec/controllers/questions_controller_spec.rb"), filename: "questions_controller_spec.rb")
       question.files.last

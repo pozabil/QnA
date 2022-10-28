@@ -7,10 +7,14 @@ feature 'User can add links to answer', %q(
 ) do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
+  given(:answer) { create(:answer, question: question, user: user) }
   given(:answer_data) { attributes_for(:answer) }
+  given(:correct_link) { create(:link, :correct, linkable: answer) }
   given(:correct_link_data) { attributes_for(:link, :correct) }
   given(:another_correct_link_data) { attributes_for(:link, :another_correct) }
+  given(:another_correct_link) { create(:link, :another_correct, linkable: answer) }
   given(:wrong_link_data) { attributes_for(:link, :wrong) }
+  given(:gist_plain_text_link) { create(:link, :gist_plain_text, linkable: answer) }
   given(:gist_plain_text_link_data) { attributes_for(:link, :gist_plain_text) }
   given(:gist_html_js_code_link_data) { attributes_for(:link, :gist_html_js_code) }
   given(:gist_multiple_files_link_data) { attributes_for(:link, :gist_multiple_files) }
@@ -151,6 +155,25 @@ feature 'User can add links to answer', %q(
     within('.answers') do
       expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url])
       expect(page).to have_link another_correct_link_data[:name], href: Link.format_url(another_correct_link_data[:url])
+    end
+  end
+
+  scenario "Answer's author edits their answer to try to remove links", js: true do
+    correct_link
+    another_correct_link
+    gist_plain_text_link
+
+    visit question_path(question)
+
+    within(".answers #answer-#{answer.id}") do
+      click_on 'Edit'
+
+      within(".answer-links #link-#{another_correct_link.id}") { click_link 'Remove' }
+
+      sleep(1)
+      expect(page).to have_link correct_link.name
+      expect(page).to have_link gist_plain_text_link.name
+      expect(page).to_not have_link another_correct_link.name
     end
   end
 end

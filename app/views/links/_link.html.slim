@@ -1,5 +1,10 @@
-div
+div id="link-#{link.id}"
   - if link.gist?
-    = link_to link.name, link.url, class: 'gist-link', data: { gist_link_name: link.name }
+    = link_to short_linkname(link), link.url, class: 'gist-link', data: { gist_link_name: link.name }
   - else
-    = link_to link.name, link.url
+    = link_to short_linkname(link), link.url
+
+  - if link.linkable.user == current_user
+    span class='remove-link-link' style="display: none;"
+      = ' | '
+      = remove_link(link)

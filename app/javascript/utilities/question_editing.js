@@ -8,6 +8,7 @@ document.addEventListener('turbolinks:load', function() {
 			$('.question .question-body').hide()
 			$('.question form').show()
 			$('.question .remove-attachment-link').show()
+			$('.question .remove-link-link').show()
 		})
 	}
 })

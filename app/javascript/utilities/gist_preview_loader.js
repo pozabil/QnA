@@ -46,7 +46,7 @@ function gistPreviewLoader(gistLink) {
 			gistPreview.append(fileTextElement)
 		})
 
-		$this.siblings().remove()
+		$this.siblings('.gist-preview-files').remove()
 		$this.parent().append(gistPreview)
 	})
 }

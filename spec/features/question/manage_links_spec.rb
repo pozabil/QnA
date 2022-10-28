@@ -1,15 +1,19 @@
 require 'rails_helper'
 
-feature 'User can add links to question', %q(
+feature 'User can add and remove links to question', %q(
         In order to provide additional info to my question
         As an question's author
-        I'd like to able to add links
+        I'd like to able to add and remove links
 ) do
   given(:user) { create(:user) }
+  given(:question) { create(:question, user: user) }
   given(:question_data) { attributes_for(:question) }
+  given(:correct_link) { create(:link, :correct, linkable: question) }
   given(:correct_link_data) { attributes_for(:link, :correct) }
+  given(:another_correct_link) { create(:link, :another_correct, linkable: question) }
   given(:another_correct_link_data) { attributes_for(:link, :another_correct) }
   given(:wrong_link_data) { attributes_for(:link, :wrong) }
+  given(:gist_plain_text_link) { create(:link, :gist_plain_text, linkable: question) }
   given(:gist_plain_text_link_data) { attributes_for(:link, :gist_plain_text) }
   given(:gist_html_js_code_link_data) { attributes_for(:link, :gist_html_js_code) }
   given(:gist_multiple_files_link_data) { attributes_for(:link, :gist_multiple_files) }
@@ -128,5 +132,25 @@ feature 'User can add links to question', %q(
 
     expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url])
     expect(page).to have_link another_correct_link_data[:name], href: Link.format_url(another_correct_link_data[:url])
+  end
+
+
+  scenario "Question's author edits their question to try to remove links", js: true do
+    correct_link
+    another_correct_link
+    gist_plain_text_link
+
+    visit question_path(question)
+
+    within('.question') do
+      click_on 'Edit question'
+
+      within(".question-links #link-#{another_correct_link.id}") { click_link 'Remove' }
+
+      sleep(1)
+      expect(page).to have_link correct_link.name
+      expect(page).to have_link gist_plain_text_link.name
+      expect(page).to_not have_link another_correct_link.name
+    end
   end
 end
