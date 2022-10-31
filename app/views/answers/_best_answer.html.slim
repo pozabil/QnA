@@ -7,6 +7,8 @@
         = form_with model: answer, class: 'edit-answer-form', html: { style: "display: none;" }, local: false do |f|
           .answer-errors
           div = f.text_area :body
+          .links
+            = render 'links/link_form_for_editing', f: f
           div = f.file_field :append_files, multiple: true, direct_upload: true
           div = f.submit t('save')
     - else

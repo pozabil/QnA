@@ -158,22 +158,41 @@ feature 'User can add links to answer', %q(
     end
   end
 
-  scenario "Answer's author edits their answer to try to remove links", js: true do
-    correct_link
-    another_correct_link
-    gist_plain_text_link
+  describe "Answer's author edits their answer", js: true do
+    scenario 'to try to remove links' do
+      correct_link
+      another_correct_link
+      gist_plain_text_link
 
-    visit question_path(question)
+      visit question_path(question)
 
-    within(".answers #answer-#{answer.id}") do
-      click_on 'Edit'
+      within(".answers #answer-#{answer.id}") do
+        click_on 'Edit'
 
-      within(".answer-links #link-#{another_correct_link.id}") { click_link 'Remove' }
+        within(".answer-links #link-#{another_correct_link.id}") { click_link 'Remove' }
 
-      sleep(1)
-      expect(page).to have_link correct_link.name
-      expect(page).to have_link gist_plain_text_link.name
-      expect(page).to_not have_link another_correct_link.name
+        sleep(1)
+        expect(page).to have_link correct_link.name
+        expect(page).to have_link gist_plain_text_link.name
+        expect(page).to_not have_link another_correct_link.name
+      end
+    end
+
+    scenario "to try to add links" do
+      answer
+      visit question_path(question)
+
+      within(".answers #answer-#{answer.id}") do
+        click_on 'Edit'
+
+        click_link 'Add Link'
+        fill_in 'Link name', with: correct_link_data[:name]
+        fill_in 'Link URL', with: correct_link_data[:url]
+        click_on 'Save'
+
+        sleep(1)
+        expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url])
+      end
     end
   end
 end

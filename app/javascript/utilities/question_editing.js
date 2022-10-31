@@ -3,6 +3,10 @@ document.addEventListener('turbolinks:load', function() {
 		$('.question').on('click', '.edit-question-link', function(event) {
 			event.preventDefault()
 
+			$('html').animate({
+				scrollTop: $('nav').offset().top
+			}, 100)
+
 			$(this).hide()
 			$('.question .question-title').hide()
 			$('.question .question-body').hide()

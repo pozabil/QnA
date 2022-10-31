@@ -85,8 +85,8 @@ feature 'User can add and remove links to question', %q(
         fill_in 'Link name', with: gist_multiple_files_link_data[:name]
         fill_in 'Link URL', with: gist_multiple_files_link_data[:url]
         click_on 'Ask'
-        sleep(1)
 
+        sleep(1)
         expect(page).to have_link gist_multiple_files_link_data[:name], href: Link.format_url(gist_multiple_files_link_data[:url])
         Octokit.gist(gist_id).files.each do |k, v|
           expect(page).to have_content correct_text_for_expect(v.filename)
@@ -101,8 +101,8 @@ feature 'User can add and remove links to question', %q(
         fill_in 'Link name', with: wrong_gist_link_data[:name]
         fill_in 'Link URL', with: wrong_gist_link_data[:url]
         click_on 'Ask'
-        sleep(1)
 
+        sleep(1)
         wrong_gist_link_text = wrong_gist_link_data[:name] + '(invalid gist URL)'
         expect(page).to have_link wrong_gist_link_text, href: Link.format_url(wrong_gist_link_data[:url])
       end
@@ -130,27 +130,46 @@ feature 'User can add and remove links to question', %q(
 
     click_on 'Ask'
 
+    sleep(1)
     expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url])
     expect(page).to have_link another_correct_link_data[:name], href: Link.format_url(another_correct_link_data[:url])
   end
 
 
-  scenario "Question's author edits their question to try to remove links", js: true do
-    correct_link
-    another_correct_link
-    gist_plain_text_link
+  describe "Question's author edits their question", js: true do
+    scenario 'to try to remove links' do
+      correct_link
+      another_correct_link
+      gist_plain_text_link
 
-    visit question_path(question)
+      visit question_path(question)
 
-    within('.question') do
-      click_on 'Edit question'
+      within('.question') do
+        click_on 'Edit question'
 
-      within(".question-links #link-#{another_correct_link.id}") { click_link 'Remove' }
+        within(".question-links #link-#{another_correct_link.id}") { click_link 'Remove' }
 
-      sleep(1)
-      expect(page).to have_link correct_link.name
-      expect(page).to have_link gist_plain_text_link.name
-      expect(page).to_not have_link another_correct_link.name
+        sleep(1)
+        expect(page).to have_link correct_link.name
+        expect(page).to have_link gist_plain_text_link.name
+        expect(page).to_not have_link another_correct_link.name
+      end
+    end
+
+    scenario "to try to add links" do
+      visit question_path(question)
+
+      within('.question') do
+        click_on 'Edit question'
+
+        click_link 'Add Link'
+        fill_in 'Link name', with: correct_link_data[:name]
+        fill_in 'Link URL', with: correct_link_data[:url]
+        click_on 'Save'
+
+        sleep(1)
+        expect(page).to have_link correct_link_data[:name], href: Link.format_url(correct_link_data[:url])
+      end
     end
   end
 end

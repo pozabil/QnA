@@ -5,9 +5,9 @@ document.addEventListener('turbolinks:load', function() {
 		})
 	}
 
-	let answers = $('.answers')
+	let elements = $('.answers, .question')
 
-	let answerCreationObserver = new MutationObserver(function(mutations) {
+	let elementCreationObserver = new MutationObserver(function(mutations) {
 		$.each(mutations, function() {
 			let addedGistLinks = $(this.addedNodes).find('.gist-link')
 			if (this.type === 'childList' && addedGistLinks.length) {
@@ -18,8 +18,8 @@ document.addEventListener('turbolinks:load', function() {
 		})
 	})
 
-	answers.each(function() {
-		answerCreationObserver.observe(this, { childList: true, subtree: true })
+	elements.each(function() {
+		elementCreationObserver.observe(this, { childList: true, subtree: true })
 	})
 })
 
