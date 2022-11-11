@@ -13,6 +13,7 @@ class Answer < ApplicationRecord
 
   def mark_as_best
     question.update(best_answer_id: self.id)
+    user.trophies.push(question.trophy) if question.trophy
   end
 
   def append_files=(attachables)

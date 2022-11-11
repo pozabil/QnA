@@ -22,6 +22,15 @@ RSpec.describe Answer, type: :model do
       answer.mark_as_best
       expect(answer.question.best_answer).to eq answer
     end
+
+    it "assign question's trophy to answer's author" do
+      question.create_trophy!(title: 'best_answer_trophy',
+                              image: {io: File.open(file_fixture('pes_s_rukoi.jpg')), filename: 'pes_s_rukoi.jpg'})
+
+      answer.mark_as_best
+
+      expect(answer.user.trophies.reload.last).to eq question.trophy
+    end
   end
 
   describe '#append_files=' do
