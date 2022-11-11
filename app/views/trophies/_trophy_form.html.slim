@@ -1,0 +1,5 @@
+= f.fields_for :trophy do |t|
+  = t.label :title
+  = t.text_field :title
+  = t.label :image
+  = t.file_field :image, direct_upload: true

@@ -24,6 +24,9 @@
     p = edit_question(@question)
     p = delete_question(@question)
 
+- if @question.user == current_user && @question.trophy
+  = render @question.trophy
+
 .answers
   table
     = render 'answers/best_answer', answer: @best_answer

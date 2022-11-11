@@ -72,6 +72,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question).links.last).to be_a_new(Link)
     end
 
+    it 'builds a new trophy to @question' do
+      expect(assigns(:question).trophy).to be_a_new(Trophy)
+    end
+
     it 'renders new view' do
       expect(response).to render_template :new
     end

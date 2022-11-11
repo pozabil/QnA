@@ -19,8 +19,13 @@ en:
       link:
         name: "Link name"
         url: "Link URL"
+      trophy:
+        title: "Trophy title"
+        image: "Trophy image"
 
   questions:
+    new:
+      trophy: "Trophy for best answer"
     create:
       success: "Your question successfuly created"
     update:
@@ -50,6 +55,10 @@ en:
     best_answer:
       delete: "Delete answer"
       delete_confirmation: "Are you sure you want to delete this answer?"
+
+  trophies:
+    trophy:
+      best_answer_trophy: 'Trophy for best answer:'
 
   shared:
     errors:
