@@ -15,4 +15,9 @@ module NavHelper
     link_to t('sign_in'),
             new_user_session_path
   end
+
+  def trophies_link
+    link_to t('.trophies'),
+            trophies_path
+  end
 end

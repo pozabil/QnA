@@ -1,0 +1,6 @@
+h1 trophies list
+
+table
+  = render @trophies if current_user.trophies.present?
+
+p = link_to t('back'), questions_path

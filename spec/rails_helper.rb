@@ -5,6 +5,7 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'billy/capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -36,10 +37,12 @@ RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
 
-  Capybara.javascript_driver = :selenium_chrome_headless
+  # Capybara.javascript_driver = :selenium_chrome_headless
+  Capybara.javascript_driver = :selenium_chrome_headless_billy
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.file_fixture_path = "#{::Rails.root}/spec/file_fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -72,6 +75,19 @@ RSpec.configure do |config|
   config.after(:all) do
     FileUtils.rm_rf("#{Rails.root}/tmp/storage")
   end
+
+  config.around(:each, type: :feature, billy: true) do |example|
+    WebMock::HttpLibAdapters::EmHttpRequestAdapter.disable!
+    example.run
+    WebMock::HttpLibAdapters::EmHttpRequestAdapter.enable!
+  end
+end
+
+Billy.configure do |c|
+  c.cache = false
+  c.record_stub_requests = true
+  c.record_requests = true
+  c.non_whitelisted_requests_disabled = true
 end
 
 Shoulda::Matchers.configure do |config|

@@ -1,0 +1,8 @@
+{
+  "name": "qna",
+  "homepage": "https://github.com/pozabil/QnA",
+  "private": true,
+  "dependencies": {
+    "gh3": "e63c07b5148a4497b79ccde880bbf3d7650d1927"
+  }
+}

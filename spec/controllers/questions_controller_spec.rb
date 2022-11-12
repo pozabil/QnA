@@ -49,6 +49,11 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
+    it 'builds a new link to @answer' do
+      get_show_question
+      expect(assigns(:answer).links.last).to be_a_new(Link)
+    end
+
     it 'renders show view' do
       get_show_question
       expect(response).to render_template :show
@@ -61,6 +66,14 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it 'builds a new link to @question' do
+      expect(assigns(:question).links.last).to be_a_new(Link)
+    end
+
+    it 'builds a new trophy to @question' do
+      expect(assigns(:question).trophy).to be_a_new(Trophy)
     end
 
     it 'renders new view' do

@@ -40,3 +40,6 @@ yarn-debug.log*
 
 # Ignore env file.
 .env
+
+# Ignore modules installed with Bower
+/vendor/assets/bower_components

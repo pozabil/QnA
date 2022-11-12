@@ -1,0 +1,84 @@
+{
+  "url": "https://api.github.com/gists/65bf63f8c050f0b576f60f5fddbb2208",
+  "forks_url": "https://api.github.com/gists/65bf63f8c050f0b576f60f5fddbb2208/forks",
+  "commits_url": "https://api.github.com/gists/65bf63f8c050f0b576f60f5fddbb2208/commits",
+  "id": "65bf63f8c050f0b576f60f5fddbb2208",
+  "node_id": "G_kwDOBTqWLNoAIDY1YmY2M2Y4YzA1MGYwYjU3NmY2MGY1ZmRkYmIyMjA4",
+  "git_pull_url": "https://gist.github.com/65bf63f8c050f0b576f60f5fddbb2208.git",
+  "git_push_url": "https://gist.github.com/65bf63f8c050f0b576f60f5fddbb2208.git",
+  "html_url": "https://gist.github.com/65bf63f8c050f0b576f60f5fddbb2208",
+  "files": {
+    "sql-kak-poluchit-tablitsu-v-sq.txt": {
+      "filename": "sql-kak-poluchit-tablitsu-v-sq.txt",
+      "type": "text/plain",
+      "language": "Text",
+      "raw_url": "https://gist.githubusercontent.com/pozabil/65bf63f8c050f0b576f60f5fddbb2208/raw/4997e7a6698b73f65f811b4ba3c35a57399c965a/sql-kak-poluchit-tablitsu-v-sq.txt",
+      "size": 66,
+      "truncated": false,
+      "content": "Как получить таблицу в SQL\n\nSELECT * FROM table"
+    }
+  },
+  "public": false,
+  "created_at": "2022-02-05T14:44:22Z",
+  "updated_at": "2022-02-05T14:44:22Z",
+  "description": "Вопрос в тесте \"SQL\"",
+  "comments": 0,
+  "user": null,
+  "comments_url": "https://api.github.com/gists/65bf63f8c050f0b576f60f5fddbb2208/comments",
+  "owner": {
+    "login": "pozabil",
+    "id": 87725612,
+    "node_id": "MDQ6VXNlcjg3NzI1NjEy",
+    "avatar_url": "https://avatars.githubusercontent.com/u/87725612?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/pozabil",
+    "html_url": "https://github.com/pozabil",
+    "followers_url": "https://api.github.com/users/pozabil/followers",
+    "following_url": "https://api.github.com/users/pozabil/following{/other_user}",
+    "gists_url": "https://api.github.com/users/pozabil/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/pozabil/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/pozabil/subscriptions",
+    "organizations_url": "https://api.github.com/users/pozabil/orgs",
+    "repos_url": "https://api.github.com/users/pozabil/repos",
+    "events_url": "https://api.github.com/users/pozabil/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/pozabil/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "forks": [
+
+  ],
+  "history": [
+    {
+      "user": {
+        "login": "pozabil",
+        "id": 87725612,
+        "node_id": "MDQ6VXNlcjg3NzI1NjEy",
+        "avatar_url": "https://avatars.githubusercontent.com/u/87725612?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/pozabil",
+        "html_url": "https://github.com/pozabil",
+        "followers_url": "https://api.github.com/users/pozabil/followers",
+        "following_url": "https://api.github.com/users/pozabil/following{/other_user}",
+        "gists_url": "https://api.github.com/users/pozabil/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/pozabil/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/pozabil/subscriptions",
+        "organizations_url": "https://api.github.com/users/pozabil/orgs",
+        "repos_url": "https://api.github.com/users/pozabil/repos",
+        "events_url": "https://api.github.com/users/pozabil/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/pozabil/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "version": "6d08171822901e9ea5f75d6addbf1230f210b9d0",
+      "committed_at": "2022-02-05T14:44:22Z",
+      "change_status": {
+        "total": 3,
+        "additions": 3,
+        "deletions": 0
+      },
+      "url": "https://api.github.com/gists/65bf63f8c050f0b576f60f5fddbb2208/6d08171822901e9ea5f75d6addbf1230f210b9d0"
+    }
+  ],
+  "truncated": false
+}

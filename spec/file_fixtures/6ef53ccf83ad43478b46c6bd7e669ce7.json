@@ -1,0 +1,102 @@
+{
+  "url": "https://api.github.com/gists/6ef53ccf83ad43478b46c6bd7e669ce7",
+  "forks_url": "https://api.github.com/gists/6ef53ccf83ad43478b46c6bd7e669ce7/forks",
+  "commits_url": "https://api.github.com/gists/6ef53ccf83ad43478b46c6bd7e669ce7/commits",
+  "id": "6ef53ccf83ad43478b46c6bd7e669ce7",
+  "node_id": "G_kwDOBTqWLNoAIDZlZjUzY2NmODNhZDQzNDc4YjQ2YzZiZDdlNjY5Y2U3",
+  "git_pull_url": "https://gist.github.com/6ef53ccf83ad43478b46c6bd7e669ce7.git",
+  "git_push_url": "https://gist.github.com/6ef53ccf83ad43478b46c6bd7e669ce7.git",
+  "html_url": "https://gist.github.com/6ef53ccf83ad43478b46c6bd7e669ce7",
+  "files": {
+    "escape_map.json": {
+      "filename": "escape_map.json",
+      "type": "application/json",
+      "language": "JSON",
+      "raw_url": "https://gist.githubusercontent.com/pozabil/6ef53ccf83ad43478b46c6bd7e669ce7/raw/126762b0524a5368ba519957052457da9df18de9/escape_map.json",
+      "size": 297,
+      "truncated": false,
+      "content": "_.escape:\n  var entityMap = {\n    escape: {\n      '&': '&amp;',\n      '<': '&lt;',\n      '>': '&gt;',\n      '\"': '&quot;',\n      \"'\": '&#x27;'\n    }\nCGI.escapeHTML:\n  TABLE_FOR_ESCAPE_HTML__ = {\n    \"'\" => '&#39;',\n    '&' => '&amp;',\n    '\"' => '&quot;',\n    '<' => '&lt;',\n    '>' => '&gt;',\n  }"
+    },
+    "file #1.txt": {
+      "filename": "file #1.txt",
+      "type": "text/plain",
+      "language": "Text",
+      "raw_url": "https://gist.githubusercontent.com/pozabil/6ef53ccf83ad43478b46c6bd7e669ce7/raw/3a9d7492b70b15ca4ee6e6632c1c693bfbddb115/file%20%231.txt",
+      "size": 81,
+      "truncated": false,
+      "content": "\t\tTested files\n  there are spaces\n tested fields\n \n \n 3 breaklines in a row\n \n \n "
+    },
+    "file #2 script.js": {
+      "filename": "file #2 script.js",
+      "type": "application/javascript",
+      "language": "JavaScript",
+      "raw_url": "https://gist.githubusercontent.com/pozabil/6ef53ccf83ad43478b46c6bd7e669ce7/raw/ffc79023b1ef24e2d3d7652b53aa98add544fcaa/file%20%232%20script.js",
+      "size": 152,
+      "truncated": false,
+      "content": "/*\nЭтот сценарий выведет текст в модальное всплывающее окно\n*/\n\nalert('Скрипт работает');"
+    }
+  },
+  "public": false,
+  "created_at": "2022-10-21T11:34:42Z",
+  "updated_at": "2022-10-21T11:34:43Z",
+  "description": "Multiple files",
+  "comments": 0,
+  "user": null,
+  "comments_url": "https://api.github.com/gists/6ef53ccf83ad43478b46c6bd7e669ce7/comments",
+  "owner": {
+    "login": "pozabil",
+    "id": 87725612,
+    "node_id": "MDQ6VXNlcjg3NzI1NjEy",
+    "avatar_url": "https://avatars.githubusercontent.com/u/87725612?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/pozabil",
+    "html_url": "https://github.com/pozabil",
+    "followers_url": "https://api.github.com/users/pozabil/followers",
+    "following_url": "https://api.github.com/users/pozabil/following{/other_user}",
+    "gists_url": "https://api.github.com/users/pozabil/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/pozabil/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/pozabil/subscriptions",
+    "organizations_url": "https://api.github.com/users/pozabil/orgs",
+    "repos_url": "https://api.github.com/users/pozabil/repos",
+    "events_url": "https://api.github.com/users/pozabil/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/pozabil/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "forks": [
+
+  ],
+  "history": [
+    {
+      "user": {
+        "login": "pozabil",
+        "id": 87725612,
+        "node_id": "MDQ6VXNlcjg3NzI1NjEy",
+        "avatar_url": "https://avatars.githubusercontent.com/u/87725612?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/pozabil",
+        "html_url": "https://github.com/pozabil",
+        "followers_url": "https://api.github.com/users/pozabil/followers",
+        "following_url": "https://api.github.com/users/pozabil/following{/other_user}",
+        "gists_url": "https://api.github.com/users/pozabil/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/pozabil/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/pozabil/subscriptions",
+        "organizations_url": "https://api.github.com/users/pozabil/orgs",
+        "repos_url": "https://api.github.com/users/pozabil/repos",
+        "events_url": "https://api.github.com/users/pozabil/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/pozabil/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "version": "a1b7d5d81654cccae805b3bc3e3bcaf74b10fe87",
+      "committed_at": "2022-10-21T11:34:42Z",
+      "change_status": {
+        "total": 31,
+        "additions": 31,
+        "deletions": 0
+      },
+      "url": "https://api.github.com/gists/6ef53ccf83ad43478b46c6bd7e669ce7/a1b7d5d81654cccae805b3bc3e3bcaf74b10fe87"
+    }
+  ],
+  "truncated": false
+}

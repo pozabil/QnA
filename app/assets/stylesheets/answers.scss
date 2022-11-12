@@ -1,3 +1,16 @@
-// Place all the styles related to the Answers controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.answer{
+	background: rgba(128,0,256,0.04);
+}
+.best-answer{
+	background: rgba(0,128,32,0.04);
+}
+.answers table, .answers th, .answers td{
+	border: 1px groove rgba(128,0,128,0.2);
+	border-collapse: collapse;
+	padding: 2px;
+}
+.new-answer {
+	background: rgba(0,0,192,0.08);
+	padding: 4px;
+	max-width: 576px;
+}

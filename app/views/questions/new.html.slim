@@ -6,7 +6,15 @@
   p
     = f.label :body
     = f.text_area :body
+
+  .trophy
+    = render 'trophies/trophy_form', f: f
+
+  .links
+    = render 'links/link_form_for_creating', f: f
+
   p
     = f.label :files
     = f.file_field :files, multiple: true, direct_upload: true
+
   p = f.submit

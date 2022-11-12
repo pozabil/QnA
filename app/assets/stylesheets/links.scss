@@ -1,0 +1,20 @@
+.gist-preview-container{
+	border: 3px double black;
+	padding: 4px;
+	max-width: 512px;
+}
+
+.gist-preview-files{
+	border: 2px dotted black;
+	padding: 4px;
+	margin:  2px;
+}
+
+.gist-preview-text{
+	border: 1px solid black;
+	padding: 2px;
+	margin-bottom: 6px;
+	max-height: 128px;
+	overflow-y: auto;
+	font-size: 80%;
+}
