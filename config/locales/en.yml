@@ -37,6 +37,7 @@ en:
       edit: "Edit question"
       delete: "Delete question"
       delete_confirmation: "Are you sure you want to delete this question?"
+      best_answer_trophy: 'Trophy for best answer:'
 
   answers:
     create:
@@ -56,12 +57,10 @@ en:
       delete: "Delete answer"
       delete_confirmation: "Are you sure you want to delete this answer?"
 
-  trophies:
-    trophy:
-      best_answer_trophy: 'Trophy for best answer:'
-
   shared:
     errors:
       header:
         one: "Fail. %{count} error detected."
         other: "Fail. %{count} errors detected."
+    nav:
+      trophies: "My trophies"

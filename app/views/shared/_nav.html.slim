@@ -1,2 +1,4 @@
 nav
   div style="text-align:right" = current_user ? sign_out_link : (sign_up_link + ' | ' + sign_in_link)
+  - if current_user
+    div style="text-align:left" = trophies_link

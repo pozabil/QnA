@@ -25,7 +25,9 @@
     p = delete_question(@question)
 
 - if @question.user == current_user && @question.trophy
-  = render @question.trophy
+  .trophy
+    = t('.best_answer_trophy')
+    = render @question.trophy
 
 .answers
   table
