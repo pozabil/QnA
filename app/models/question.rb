@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  include Voteable
+
   belongs_to :user
   belongs_to :best_answer, class_name: 'Answer', optional: true
   has_one :trophy, dependent: :destroy

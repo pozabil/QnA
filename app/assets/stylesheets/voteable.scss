@@ -1,0 +1,11 @@
+.upvote_button {
+    &.active {
+        background: green;
+    }
+}
+
+.downvote_button {
+    &.active {
+        background: red;
+    }
+}

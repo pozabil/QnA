@@ -1,6 +1,7 @@
-- if answer.persisted?
+- if answer.present? && answer.persisted?
+  - best_answer ||= false
 
-  tr class='answer' id="answer-#{answer.id}"
+  tr class="#{best_answer ? 'best-' : ''}answer" id="answer-#{answer.id}"
     td class='answer-body' = answer.body
     - if answer.user == current_user
       td
@@ -22,7 +23,22 @@
       - if answer.files.attached?
         = render answer.files
 
+    td class='rating' = answer.rating
+    - if current_user.blank? || answer.user == current_user
+      td
+      td
+    - else
+      td = upvote_button(answer)
+      td = downvote_button(answer)
+
+    - if answer.question.user == current_user && !best_answer
+      td = mark_as_best(answer)
+    - else
+      td
+
     - if answer.user == current_user
       td = edit_answer(answer)
       td = delete_answer(answer)
-      td = mark_as_best(answer)
+    - else
+      td
+      td

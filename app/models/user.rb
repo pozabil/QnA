@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :questions
   has_many :answers
   has_many :trophies
+  has_many :user_voteables, dependent: :destroy
 end

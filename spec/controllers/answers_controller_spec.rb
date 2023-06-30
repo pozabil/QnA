@@ -151,12 +151,12 @@ RSpec.describe AnswersController, type: :controller do
       before { login(another_user) }
 
       it "does not change question's best answer in database" do
-        expect { mark_answer_as_best }.to_not change(answer.question, :best_answer_id)
+        expect { mark_answer_as_best }.to_not change { answer.question.reload.best_answer_id }
       end
 
-      it "renders javascript code from mark_as_best view" do
+      it "returns 204 status code" do
         mark_answer_as_best
-        expect(response).to render_template :mark_as_best
+        expect(response).to have_http_status(:not_acceptable)
       end
     end
   end

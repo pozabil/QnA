@@ -24,6 +24,15 @@
     p = edit_question(@question)
     p = delete_question(@question)
 
+  div style="display: flex;"
+    div
+      span Rating: 
+      span class='rating' = @question.rating
+    - unless current_user.blank? || @question.user == current_user
+      div style="display: flex; margin-inline-start: 2px;"
+        = upvote_button(@question)
+        = downvote_button(@question)
+
 - if @question.user == current_user && @question.trophy
   .trophy
     = t('.best_answer_trophy')
@@ -31,7 +40,7 @@
 
 .answers
   table
-    = render 'answers/best_answer', answer: @best_answer
+    = render 'answers/answer', answer: @best_answer, best_answer: true
     = render @other_answers
 
 = render 'answers/new'

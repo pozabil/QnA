@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_answer, only: %i[update destroy mark_as_best]
 
@@ -21,9 +23,11 @@ class AnswersController < ApplicationController
   end
 
   def mark_as_best
-    if @answer.question.user = current_user
+    if @answer.question.user == current_user
       @answer.mark_as_best
       flash.now[:notice] = t('.success')
+    else
+      head :not_acceptable
     end
   end
 

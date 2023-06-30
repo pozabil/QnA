@@ -4,6 +4,10 @@ RSpec.describe Question, type: :model do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
 
+  it "includes the Voteable module" do
+    expect(Answer.include?(Voteable)).to be true
+  end
+
   it { should belong_to :user }
   it { should belong_to(:best_answer).optional }
   it { should have_one(:trophy).dependent(:destroy) }
