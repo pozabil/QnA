@@ -9,14 +9,14 @@ module Voted
     return if @voteable.user == current_user
 
     smart_upvote!
-    render_json
+    render_json if @voteable.update_rating
   end
 
   def downvote
     return if @voteable.user == current_user
 
     smart_downvote!
-    render_json
+    render_json if @voteable.update_rating
   end
 
   private
@@ -40,6 +40,6 @@ module Voted
   end
   
   def render_json
-    render json: { model_klass.name.underscore => { id: @voteable.id, rating: @voteable.rating, action: action_name} } if @voteable.update_rating
+    render json: { model_klass.name.underscore => { id: @voteable.id, rating: @voteable.rating, action: action_name} }
   end
 end
