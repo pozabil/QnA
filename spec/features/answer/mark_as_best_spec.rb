@@ -49,8 +49,9 @@ feature 'Author can choose best answer for their question', %q(
 
     scenario "tries to mark answer as best for someone else's question" do
       another_user = create(:user)
-      another_answer = create(:answer, question: question, user: another_user)
-      visit question_path(question)
+      another_question = create(:question, user: another_user)
+      another_answer = create(:answer, question: another_question, user: another_user)
+      visit question_path(another_question)
 
       within(".answers #answer-#{another_answer.id}") { expect(page).to_not have_button 'Mark as best' }
     end

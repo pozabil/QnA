@@ -14,6 +14,7 @@ import "@nathanvda/cocoon"
 // import * as _ from "underscore"
 // import * as Gh3 from "gh3"
 import "utilities/gist_preview_loader"
+import "utilities/voteable_rating_manager"
 
 Rails.start()
 Turbolinks.start()

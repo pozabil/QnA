@@ -5,6 +5,8 @@ en:
   save: "Save"
   sign_out: "Sign out"
   sign_out_confirm: "Do you really want to logout?"
+  upvote: "+"
+  downvote: "-"
 
   helpers:
     submit:
